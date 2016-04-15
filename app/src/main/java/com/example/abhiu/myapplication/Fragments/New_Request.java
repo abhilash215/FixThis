@@ -33,32 +33,7 @@ public class New_Request extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment New_Request.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static New_Request newInstance(String param1, String param2) {
-        New_Request fragment = new New_Request();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,17 +42,14 @@ public class New_Request extends Fragment {
         return inflater.inflate(R.layout.fragment_new__request, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
 
 
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-    public static final New_Request newInstance(int sectionNumber) {
+
+    public static final New_Request newInstance(int sectionNumber)
+    {
         New_Request fragment = new New_Request();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);

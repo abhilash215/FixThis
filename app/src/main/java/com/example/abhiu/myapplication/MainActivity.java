@@ -109,4 +109,12 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (getSupportFragmentManager().getBackStackEntryCount()>0) {
+            outState.putInt("activity_main", 1);
+        }
+        super.onSaveInstanceState(outState);
+    }
 }
