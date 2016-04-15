@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.abhiu.myapplication.R;
 
@@ -27,6 +28,9 @@ public class New_Request extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    View view;//remove this later
+    private Button testButton; // remove this later
+
     private OnFragmentInteractionListener mListener;
 
     public New_Request() {
@@ -37,9 +41,18 @@ public class New_Request extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new__request, container, false);
+        view = inflater.inflate(R.layout.fragment_new__request, container, false);
+        testButton = (Button) view.findViewById(R.id.test_button_id);
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.req_fragment,PostRequest.newInstance(mParam1,mParam2)).addToBackStack(null).commit();
+            }
+        });
+        return view;
     }
 
 

@@ -14,6 +14,7 @@ public class LaunchScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch_screen);
 
+        //should add launch screen animation
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
