@@ -14,7 +14,6 @@ public class LaunchScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch_screen);
 
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -22,6 +21,7 @@ public class LaunchScreen extends AppCompatActivity {
                 LaunchScreen.this.startActivity(i);
                 LaunchScreen.this.finish();
             }
-        }, 2500);
+        }, 2000);
+
     }
 }
