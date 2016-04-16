@@ -29,7 +29,6 @@ public class New_Request extends Fragment {
     private String mParam2;
 
     View view;//remove this later
-    private Button testButton; // remove this later
 
     private OnFragmentInteractionListener mListener;
 
@@ -44,14 +43,7 @@ public class New_Request extends Fragment {
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_new__request, container, false);
-        testButton = (Button) view.findViewById(R.id.test_button_id);
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.req_fragment,PostRequest.newInstance(mParam1,mParam2)).addToBackStack(null).commit();
-            }
-        });
+
         return view;
     }
 

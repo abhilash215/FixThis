@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.req)
         {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.drawer_layout, New_Request.newInstance(R.id.req_fragment))
+                    .replace(R.id.content_main, New_Request.newInstance(R.id.req_fragment))
                     .addToBackStack(null)
                     .commit();
             Toast.makeText(getApplicationContext(), "Loading 'New Request' fragment", Toast.LENGTH_SHORT).show();
