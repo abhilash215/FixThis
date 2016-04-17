@@ -1,5 +1,6 @@
 package com.example.abhiu.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,9 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import com.example.abhiu.myapplication.Fragments.New_Request;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -87,21 +85,26 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.req)
         {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.drawer_layout, New_Request.newInstance(R.id.req_fragment))
-                    .addToBackStack(null)
-                    .commit();
-            Toast.makeText(getApplicationContext(), "Loading 'New Request' fragment", Toast.LENGTH_SHORT).show();
+            Intent i=new Intent(this,com.example.abhiu.myapplication.Activities.NewReq_Activity.class);
+            startActivity(i);
         }
-        else if (id == R.id.nav_gallery) {
+        else if (id == R.id.nav_gallery)
+        {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_slideshow)
+        {
 
-        } else if (id == R.id.nav_manage) {
+        }
+        else if (id == R.id.nav_manage)
+        {
 
-        } else if (id == R.id.abt_app) {
+        }
+        else if (id == R.id.abt_app)
+        {
 
-        } else if (id == R.id.abt_me) {
+        }
+        else if (id == R.id.abt_me)
+        {
 
         }
 
