@@ -10,85 +10,58 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.abhiu.myapplication.MainActivity"
+    tools:context=".Activities.MainActivity"
     tools:showIn="@layout/app_bar_main">
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/new_request_icon"
-        android:src="@drawable/new_request_icon"
-        android:paddingLeft="25dp"
-        android:paddingTop="33dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" New Request"
         android:id="@+id/new_req"
-        android:layout_alignTop="@+id/recent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:textStyle="bold"
-        android:textSize="17sp"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/recent_icon"
-        android:layout_alignParentRight="true"
-        android:id="@+id/recent_icon_id"
-        android:paddingRight="40dp"
-        android:paddingTop="33dp"/>
+        android:textSize="17sp"
+        android:layout_alignBaseline="@+id/recent"
+        android:layout_alignBottom="@+id/recent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Recent"
         android:id="@+id/recent"
-        android:layout_marginRight="36dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginTop="95dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_marginRight="31dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginTop="66dp"
         android:textStyle="bold"
-        android:textSize="17sp"/>
-
-
+        android:textSize="17sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/imageView"
+        android:layout_alignEnd="@+id/imageView" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" My Requets"
         android:id="@+id/my_req"
-        android:layout_alignTop="@+id/fav"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:textStyle="bold"
-        android:textSize="17sp"/>
+        android:textSize="17sp"
+        android:layout_alignBaseline="@+id/fav"
+        android:layout_alignBottom="@+id/fav"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" Favorites"
         android:id="@+id/fav"
-        android:layout_marginTop="118dp"
+        android:layout_marginTop="88dp"
+        android:textStyle="bold"
+        android:textSize="17sp"
         android:layout_below="@+id/recent"
         android:layout_alignRight="@+id/recent"
-        android:layout_alignEnd="@+id/recent"
-        android:textStyle="bold"
-        android:textSize="17sp"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/favourites_id"
-        android:src="@drawable/favourites_icon"
-        android:layout_below="@+id/recent"
-        android:layout_alignParentRight="true"
-        android:paddingRight="45dp"
-        android:paddingTop="33dp"
-        />
+        android:layout_alignEnd="@+id/recent" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -96,19 +69,19 @@
         android:text="User"
         android:textStyle="bold"
         android:textSize="17sp"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/fav"
         android:layout_alignRight="@+id/fav"
         android:layout_alignEnd="@+id/fav"
-        android:layout_marginBottom="150dp" />
+        android:layout_marginTop="95dp" />
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/user_id"
-        android:src="@drawable/user_icon"
-        android:layout_below="@+id/fav"
+        android:layout_height="70dp"
+        android:src="@drawable/campusaerialview"
+        android:id="@+id/imageView"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:paddingRight="40dp"
-        android:paddingTop="33dp"/>
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="41dp" />
 
 </RelativeLayout>
