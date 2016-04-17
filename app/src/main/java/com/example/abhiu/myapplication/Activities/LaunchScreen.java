@@ -22,7 +22,7 @@ public class LaunchScreen extends AppCompatActivity {
                 LaunchScreen.this.startActivity(i);
                 LaunchScreen.this.finish();
             }
-        }, 2000);
+        }, 2000); //delay of 2 seconds
 
     }
 }
