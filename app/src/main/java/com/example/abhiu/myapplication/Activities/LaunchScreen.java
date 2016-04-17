@@ -17,7 +17,7 @@ public class LaunchScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(LaunchScreen.this, com.example.abhiu.myapplication.MainActivity.class);
+                Intent i = new Intent(LaunchScreen.this, MainActivity.class);
                 LaunchScreen.this.startActivity(i);
                 LaunchScreen.this.finish();
             }
