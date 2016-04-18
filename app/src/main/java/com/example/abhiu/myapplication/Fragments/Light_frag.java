@@ -10,8 +10,8 @@ import com.example.abhiu.myapplication.R;
 
 
 public class Light_frag extends Fragment {
-    public Light_frag()
-    {
+
+    public Light_frag() {
 
     }
 
@@ -22,13 +22,13 @@ public class Light_frag extends Fragment {
         return inflater.inflate(R.layout.fragment_light_frag, container, false);
     }
 
-    private static final String ARG_SECTION_NUMBER1="section_number";
-    public static Light_frag newInstance1(int light)
-    {
+    private static final String ARG_SECTION_NUMBER1 = "section_number";
 
-        Light_frag frag =new Light_frag();
-        Bundle args=new Bundle();
-        args.putInt(ARG_SECTION_NUMBER1,light);
+    public static Light_frag newInstance1(int light) {
+
+        Light_frag frag = new Light_frag();
+        Bundle args = new Bundle();
+        args.putInt(ARG_SECTION_NUMBER1, light);
         frag.setArguments(args);
         return frag;
     }

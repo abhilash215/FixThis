@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import com.example.abhiu.myapplication.R;
 
 
-public class road extends Fragment {
-    public road()
+public class Road_frag extends Fragment {
+    public Road_frag()
     {
 
     }
@@ -24,8 +24,8 @@ public class road extends Fragment {
 
     private static final String ARG_SECTION_NUMBER="section_number";
 
-    public static  final road newInstance(int sectionNumber){
-        road fragment=new road();
+    public static  final Road_frag newInstance(int sectionNumber){
+        Road_frag fragment=new Road_frag();
         Bundle args=new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
