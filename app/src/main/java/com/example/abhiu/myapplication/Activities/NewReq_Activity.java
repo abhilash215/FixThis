@@ -30,7 +30,7 @@ public class NewReq_Activity extends AppCompatActivity {
              public void onClick(View v) {
 
                  getSupportFragmentManager().beginTransaction()
-                     .replace(R.id.new_content_activity,road.newInstance(R.id.road))
+                     .add(R.id.frame_replace,road.newInstance(R.id.road))
                      .commit();
                  }
          });

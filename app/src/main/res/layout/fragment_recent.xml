@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/road"
+    android:background="@color/colorPrimaryDark"
     tools:context=".Fragments.road">
 
     <!-- TODO: Update blank fragment layout -->
