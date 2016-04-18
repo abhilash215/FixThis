@@ -2,13 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/road"
-    tools:context=".Fragments.road">
+    android:id="@+id/light"
+    tools:context="com.example.abhiu.myapplication.Fragments.Light_frag">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text=" recent fragment" />
+        android:text="light fragment" />
 
 </FrameLayout>
