@@ -20,6 +20,8 @@ public class Road_frag extends Fragment {
                                           Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_recent, container, false);
+
+
     }
 
     private static final String ARG_SECTION_NUMBER="section_number";
@@ -31,7 +33,5 @@ public class Road_frag extends Fragment {
         fragment.setArguments(args);
         return  fragment;
     }
-
-
 
 }

@@ -52,6 +52,20 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+/*
+    ImageView img = (ImageView) findViewById(R.id.new_request_id);
+    img.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(View v)
+        {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame_replace, Light_frag.newInstance1(R.id.light))
+                    .commit();
+        }
+    });*/
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
