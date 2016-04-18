@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.abhiu.myapplication.Fragments.road;
+import com.example.abhiu.myapplication.Fragments.Road_frag;
 import com.example.abhiu.myapplication.R;
 
 public class NewReq_Activity extends AppCompatActivity {
@@ -30,7 +30,7 @@ public class NewReq_Activity extends AppCompatActivity {
              public void onClick(View v) {
 
                  getSupportFragmentManager().beginTransaction()
-                     .replace(R.id.new_content_activity,road.newInstance(R.id.road))
+                     .replace(R.id.new_content_activity, Road_frag.newInstance(R.id.road))
                      .commit();
                  }
          });
@@ -41,7 +41,7 @@ public class NewReq_Activity extends AppCompatActivity {
             public void onClick(View v)
             {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.new_content_activity,road.newInstance1(R.id.light))
+                        .replace(R.id.new_content_activity,Road_frag.newInstance1(R.id.light))
                         .commit();
             }
         });*/
