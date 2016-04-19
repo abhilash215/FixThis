@@ -10,7 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.example.abhiu.myapplication.Fragments.User_Profile_frag;
 import com.example.abhiu.myapplication.R;
 
 public class MainActivity extends AppCompatActivity
@@ -33,6 +36,28 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        ImageView new_img=(ImageView)findViewById(R.id.new_request_id);
+        new_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i1=new Intent(MainActivity.this,NewReq_Activity.class);
+                startActivity(i1);
+
+            }
+        });
+
+        ImageView user_img=(ImageView)findViewById(R.id.user_img);
+        user_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_main, User_Profile_frag.newInstanceuser(R.id.user_profile))
+                        .commit();
+            }
+        });
     }
 
     @Override
@@ -51,18 +76,6 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
-/*
-    ImageView img = (ImageView) findViewById(R.id.new_request_id);
-    img.setOnClickListener(new OnClickListener() {
-        @Override
-        public void onClick(View v)
-        {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_replace, Light_frag.newInstance1(R.id.light))
-                    .commit();
-        }
-    });*/
 
 
 

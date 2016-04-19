@@ -17,7 +17,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     private Context mContext;
     OnItemClickListener mItemClickListener;
-private String[] mDataset={"hello", "hello1"};
+    private String[] mDataset={"hello", "hello1"};
 
     public MyRecyclerViewAdapter(Context context,AdapterView.OnItemClickListener mItemClickListener) {
         this.mContext = context;
@@ -34,7 +34,7 @@ private String[] mDataset={"hello", "hello1"};
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-holder.vtext.setText(mDataset[position]);
+      holder.vtext.setText("data");
     }
 
     @Override

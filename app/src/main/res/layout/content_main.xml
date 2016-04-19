@@ -5,10 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/content_main"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Activities.MainActivity"
     tools:showIn="@layout/app_bar_main">
@@ -30,10 +26,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/new_request_id"
         android:clickable="true"
+        android:layout_marginLeft="35dp"
         android:src="@drawable/new_request_icon"
-        android:layout_above="@+id/new_req"
-        android:layout_alignRight="@+id/my_req"
-        android:layout_alignEnd="@+id/my_req" />
+        android:layout_above="@+id/new_req" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -78,11 +73,22 @@
         android:layout_height="wrap_content"
         android:text="User"
         android:textStyle="bold"
-        android:textSize="17sp"
+        android:textSize="20sp"
+        android:id="@+id/user_text"
         android:layout_below="@+id/fav"
         android:layout_alignRight="@+id/fav"
         android:layout_alignEnd="@+id/fav"
         android:layout_marginTop="95dp" />
+
+    <ImageView
+        android:layout_width="38dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:src="@drawable/user_icon"
+        android:id="@+id/user_img"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/user_text"
+        android:layout_alignEnd="@+id/user_text" />
 
     <ImageView
         android:layout_width="wrap_content"
