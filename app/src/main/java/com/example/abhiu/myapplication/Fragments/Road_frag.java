@@ -28,7 +28,7 @@ public class Road_frag extends Fragment {
 
     private static final String ARG_SECTION_NUMBER="section_number";
 
-    public static  final Road_frag newInstance(int sectionNumber){
+    public static  final Road_frag  newInstance(int sectionNumber){
         Road_frag fragment=new Road_frag();
         Bundle args=new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);

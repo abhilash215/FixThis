@@ -18,7 +18,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     private Context mContext;
     OnItemClickListener mItemClickListener;
-    private String[] mDataset={"hello", "hello1","hello3","hello4","hello5","hello6","hello7","hello8","hello9","hello10"};
+    private String[] mDataset={"road", "light","leakages","grabage","general","hello6","hello7","hello8","hello9","hello10"};
 
 
 

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.abhiu.myapplication.Fragments.Garbage_frag;
 import com.example.abhiu.myapplication.Fragments.Gen_frag;
@@ -81,12 +82,41 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
 
 
 */
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace, new RecyclerView_frag()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace, new RecyclerView_frag())
+                .addToBackStack(null)
+               .commit();
     }
 
     @Override
     public void loadComplaint(int type) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace,Road_frag.newInstance(type))
-        .addToBackStack(null).commit();
+
+        switch (type)
+        {
+            case 0:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace,Road_frag.newInstance(type))
+                        .addToBackStack(null)
+                       .commit();
+                break;
+            case 1:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace,Light_frag.newInstance1(type))
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            case 2:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace,Leak_frag.newInstance4(type))
+                       .addToBackStack(null)
+                        .commit();
+                break;
+            case 3:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace,Garbage_frag.newInstance3(type))
+                       .addToBackStack(null)
+                       .commit();
+                break;
+            default:
+                Toast.makeText(getApplicationContext(),"No complaint selected",Toast.LENGTH_LONG);
+        }
+
+
+
     }
 }
