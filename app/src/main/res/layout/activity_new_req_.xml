@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/frame_replace">
-
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -18,53 +13,11 @@
         android:background="?attr/colorPrimary"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frame_replace">
 
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Road/Pothole"
-            android:id="@+id/button_road"
-            android:layout_below="@+id/toolbar"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="40dp" />
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Lights"
-            android:id="@+id/button_light"
-            android:layout_below="@+id/button_road"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Garbage dumping"
-            android:id="@+id/button_dump"
-            android:layout_below="@+id/button_light"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Leakages"
-            android:id="@+id/button_leak"
-            android:layout_below="@+id/button_dump"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="General"
-            android:id="@+id/button_other"
-            android:layout_below="@+id/button_leak"
-            android:layout_alignRight="@+id/button_leak"
-            android:layout_alignEnd="@+id/button_leak" />
-
+    </FrameLayout>
 
         </RelativeLayout>
-</FrameLayout>

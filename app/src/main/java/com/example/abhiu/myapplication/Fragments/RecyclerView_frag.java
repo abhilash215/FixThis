@@ -15,7 +15,8 @@ import com.example.abhiu.myapplication.R;
 public class RecyclerView_frag extends Fragment
 {
     RecyclerView mRecyclerView;
-    RecyclerView.LayoutManager mLayoutManager;
+    LinearLayoutManager mLinearLayoutManager;
+    //RecyclerView.LayoutManager mLayoutManager;
     MyRecyclerViewAdapter mRecyclerViewAdapter;
    // private onListItemSelectedListener mListener;
 
@@ -24,21 +25,38 @@ public class RecyclerView_frag extends Fragment
         // Required empty public constructor
     }
 
-
-
+    //interface to handle loading of fragment from recycler view
+    public interface loadFragment{
+        public void loadComplaint(int type);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View rootview = inflater.inflate(R.layout.fragment_recycler_view_frag, container, false);
-        mRecyclerView = (RecyclerView) rootview.findViewById(R.id.cardList);
+        mRecyclerView = (RecyclerView) rootview.findViewById(R.id.recycleViewId);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
+        /////---------------///////////////////////////////////////////////
+        //mLayoutManager = new LinearLayoutManager(getActivity());
+       // mRecyclerView.setLayoutManager(mLayoutManager);
+        //////////////////*********************--------------------////////////
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mRecyclerViewAdapter = new MyRecyclerViewAdapter(getContext());
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
 
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        final loadFragment loadFragmentInterface;
+        loadFragmentInterface = (loadFragment) getContext();
+
+        mRecyclerViewAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                loadFragmentInterface.loadComplaint(position);
+            }
+        });
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         return rootview;
     }
 
