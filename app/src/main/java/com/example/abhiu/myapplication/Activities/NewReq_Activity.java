@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.abhiu.myapplication.Fragments.Garbage_frag;
 import com.example.abhiu.myapplication.Fragments.Gen_frag;
@@ -19,6 +21,7 @@ public class NewReq_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_req_);
+     //   getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace, new RecyclerView_frag()).commit();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.setTitle("New Requests");
@@ -34,7 +37,7 @@ public class NewReq_Activity extends AppCompatActivity {
              public void onClick(View v) {
 
                  getSupportFragmentManager().beginTransaction()
-                     .add(R.id.frame_replace, Road_frag.newInstance(R.id.road))
+                     .replace(R.id.frame_replace, Road_frag.newInstance(R.id.road))
                      .commit();
                  }
          });
@@ -76,6 +79,10 @@ public void onClick(View v)
                         .commit();
             }
         });
+
+
+
+
     }
 
 }

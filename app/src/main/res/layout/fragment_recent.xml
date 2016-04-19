@@ -1,10 +1,10 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/road"
-    android:background="@color/colorPrimaryDark"
+    android:background="#778899"
     tools:context=".Fragments.road">
 
     <!-- TODO: Update blank fragment layout -->
@@ -17,6 +17,14 @@
         android:background="?attr/colorPrimary"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+<ImageView
+    android:layout_width="120dp"
+    android:layout_height="120dp"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="50dp"
+    android:src="@drawable/camera"
+    android:id="@+id/camera_road"/>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,4 +32,15 @@
         android:text=" recent fragment"
         android:layout_marginTop="300dp"/>
 
-</FrameLayout>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_below="@+id/camera"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="39dp"
+        android:layout_marginStart="39dp" />
+
+
+</RelativeLayout>
