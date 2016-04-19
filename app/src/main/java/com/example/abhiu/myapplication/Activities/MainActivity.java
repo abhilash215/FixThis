@@ -101,6 +101,12 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
 
+        if(id==R.id.home)
+        {
+            Intent i=new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(i);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -115,14 +121,17 @@ public class MainActivity extends AppCompatActivity
             Intent i=new Intent(this,com.example.abhiu.myapplication.Activities.NewReq_Activity.class);
             startActivity(i);
         }
-        else if (id == R.id.nav_gallery)
-        {
-
-        } else if (id == R.id.nav_slideshow)
+        else if (id == R.id.nav_recent)
         {
 
         }
-        else if (id == R.id.nav_manage)
+        else if (id==R.id.home)
+        {
+            Intent i=new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(i);
+
+        }
+        else if (id == R.id.nav_fav)
         {
 
         }

@@ -3,20 +3,21 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/req"
+            android:id="@+id/home"
             android:icon="@drawable/ic_menu_camera"
+            android:title="Home" />
+        <item
+            android:id="@+id/req"
+            android:icon="@drawable/new_request_icon"
             android:title="New Request" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:id="@+id/nav_recent"
+            android:icon="@drawable/recent_icon"
             android:title="Recent" />
+
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="My Requests" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
+            android:id="@+id/nav_fav"
+            android:icon="@drawable/favourites_icon"
             android:title="Favorites" />
     </group>
 
@@ -24,7 +25,7 @@
         <menu>
             <item
                 android:id="@+id/abt_me"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/user_icon"
                 android:title="About Me " />
             <item
                 android:id="@+id/abt_app"
@@ -32,7 +33,7 @@
                 android:title="About Us " />
             <item
                 android:id="@+id/settings"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_menu_manage"
                 android:title="Settings" />
         </menu>
     </item>
