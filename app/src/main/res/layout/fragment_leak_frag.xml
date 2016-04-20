@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/leakage"
-    android:background="@color/colorPrimaryDark"
     tools:context="com.example.abhiu.myapplication.Fragments.Leak_frag">
 
     <!-- TODO: Update blank fragment layout -->

@@ -141,8 +141,6 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.abt_me)
         {
-
-
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_main, User_Profile_frag.newInstanceuser(R.id.user_profile))
                     .commit();

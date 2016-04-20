@@ -20,17 +20,21 @@
         android:text="Choose the Category to proceed"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"/>
+        android:id="@+id/cat_frag"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleViewId"
         android:layout_width="match_parent"
         android:layout_height="430dp"
+        android:paddingTop="5dp"
+        android:layout_marginTop="7dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_below="@+id/cat_frag" />
 
 
 </RelativeLayout>

@@ -30,6 +30,15 @@
         android:src="@drawable/new_request_icon"
         android:layout_above="@+id/new_req" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/recent_img"
+        android:clickable="true"
+        android:src="@drawable/recent_icon"
+        android:layout_above="@+id/new_req"
+        android:layout_alignStart="@+id/recent" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,6 +64,14 @@
         android:layout_alignBottom="@+id/fav"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/favourites_icon"
+        android:id="@+id/fav_img"
+        android:layout_above="@+id/my_req"
+        android:layout_alignStart="@+id/recent" />
 
     <TextView
         android:layout_width="wrap_content"
