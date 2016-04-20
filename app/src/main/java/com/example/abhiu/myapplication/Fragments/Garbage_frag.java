@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
 
 import java.io.ByteArrayOutputStream;
@@ -63,6 +64,17 @@ public class Garbage_frag extends Fragment {
 
     public Garbage_frag() {
         // Required empty public constructor
+    }
+
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Set title bar
+        ((NewReq_Activity) getActivity())
+                .setActionBarTitle("Garbage ");
+
     }
 
     @Override

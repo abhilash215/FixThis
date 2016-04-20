@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.abhiu.myapplication.Activities.MainActivity;
 import com.example.abhiu.myapplication.R;
 
 
@@ -15,12 +16,6 @@ public class User_Profile_frag extends Fragment {
         // Required empty public constructor
     }
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,5 +35,13 @@ public class User_Profile_frag extends Fragment {
     }
 
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Set title bar
+        ((MainActivity) getActivity())
+                .setActionBarTitle("User Profile");
+
+    }
 
 }

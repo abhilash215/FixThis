@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
 
 import java.io.ByteArrayOutputStream;
@@ -115,6 +116,14 @@ return  view;
     }
 
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Set title bar
+        ((NewReq_Activity) getActivity())
+                .setActionBarTitle("Leakages");
+
+    }
     /////////////////////////////////////////////////////////////////////////////////////////////////
     private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");

@@ -33,7 +33,10 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
     }
 
 
-
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

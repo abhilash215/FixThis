@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
 
 import java.io.ByteArrayOutputStream;
@@ -84,6 +85,15 @@ ImageView iv;
         }
     }
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Set title bar
+        ((NewReq_Activity) getActivity())
+                .setActionBarTitle("Lights");
+
+    }
 
 
     @Override

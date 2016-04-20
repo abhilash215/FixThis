@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
 
 import java.io.ByteArrayOutputStream;
@@ -87,6 +88,14 @@ return view;
     }
 
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Set title bar
+        ((NewReq_Activity) getActivity())
+                .setActionBarTitle("General/Others");
+
+    }
     private static final String ARG_SECTION_NUMBER5 = "section_number";
 
     public static Gen_frag newInstance5(int general) {

@@ -16,9 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.example.abhiu.myapplication.Activities.MainActivity;
+import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
 
 import java.io.ByteArrayOutputStream;
@@ -92,16 +91,24 @@ public class Road_frag extends Fragment {
 
         iv =(ImageView) rootView.findViewById(R.id.camera_road);
        iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+           @Override
+           public void onClick(View v) {
                //Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//start new activity for image capture
-                //getActivity().startActivityForResult(i, CAMERA_REQUEST);
-                selectImage();
-            }
-        });
-
-
+               //getActivity().startActivityForResult(i, CAMERA_REQUEST);
+               selectImage();
+           }
+       });
         return rootView;
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Set title bar
+        ((NewReq_Activity) getActivity())
+                .setActionBarTitle("Road/Potholes");
+
     }
 
     private static final String ARG_SECTION_NUMBER="section_number";
@@ -113,6 +120,8 @@ public class Road_frag extends Fragment {
         fragment.setArguments(args);
         return  fragment;
     }
+
+
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
     private void onCaptureImageResult(Intent data) {
