@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="dumpings">
-        <item>
-            needles
-        </item>
+        <item>needles</item>
         <item> appliances</item>
-        <item> litters</item>
+        <item> litter</item>
+        <item> Furniture</item>
+        <item> Construction Debris</item>
         <item> tyres</item>
     </string-array>
 </resources>

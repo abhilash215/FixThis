@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.example.abhiu.myapplication.Fragments.Garbage_frag;
+import com.example.abhiu.myapplication.Fragments.Gen_frag;
 import com.example.abhiu.myapplication.Fragments.Leak_frag;
 import com.example.abhiu.myapplication.Fragments.Light_frag;
 import com.example.abhiu.myapplication.Fragments.RecyclerView_frag;
@@ -55,6 +56,11 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
                        .addToBackStack(null)
                        .commit();
                 break;
+            case 4:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace, Gen_frag.newInstance5(type))
+                        .addToBackStack(null)
+                        .commit();
+
             default:
                 Toast.makeText(getApplicationContext(),"No complaint selected",Toast.LENGTH_LONG);
         }

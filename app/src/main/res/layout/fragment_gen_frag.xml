@@ -1,14 +1,64 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/general"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.example.abhiu.myapplication.Fragments.Gen_frag">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="general" />
 
-</FrameLayout>
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="0dp"
+        android:src="@drawable/camera"
+        android:id="@+id/camera_other"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:id="@+id/location_other"
+        android:layout_below="@+id/camera_other"
+        android:textSize="20sp"/>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/edit_loc_other"
+        android:layout_marginTop="0dp"
+        android:layout_below="@+id/location_other"
+        android:layout_alignParentLeft="true" />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Description"
+        android:layout_marginTop="50dp"
+        android:textSize="20sp"
+        android:id="@+id/desc_other"
+        android:layout_below="@+id/location_other"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/user_road"
+        android:textSize="20dp"
+        android:layout_below="@+id/desc_other"
+        android:text="Reporter"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_marginTop="39dp"
+        android:id="@+id/buttonother"
+        android:layout_below="@+id/user_road"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>
