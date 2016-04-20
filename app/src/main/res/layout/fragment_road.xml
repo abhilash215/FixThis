@@ -48,6 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/road_landmark"
+        android:textSize="20sp"
         android:layout_below="@+id/edit_loc_road"
         android:text="Landmark"/>
 
@@ -55,16 +56,25 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/road_desc"
+        android:textSize="20sp"
         android:layout_below="@+id/road_landmark"
         android:text="Description"/>
 
-    <TextView
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/user_road"
         android:textSize="20dp"
         android:layout_below="@+id/road_desc"
         android:text="Reporter"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_marginTop="450dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/buttonroad" />
 
 
 </RelativeLayout>

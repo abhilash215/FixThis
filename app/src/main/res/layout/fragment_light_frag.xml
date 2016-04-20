@@ -37,14 +37,33 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/road_desc"
+        android:textSize="20dp"
         android:layout_below="@+id/edit_loc_light"
-        android:text="Description"/>
+        android:text="Issue"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="7 digit number on Pole"
-        android:layout_marginTop="150dp"/>
+        android:layout_marginTop="240dp"
+        android:textSize="20sp"
+        android:id="@+id/pole_number"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/user_light"
+        android:textSize="20dp"
+        android:layout_below="@+id/pole_number"
+        android:text="Reporter"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_marginTop="370dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/buttonlight" />
+
 
 
 

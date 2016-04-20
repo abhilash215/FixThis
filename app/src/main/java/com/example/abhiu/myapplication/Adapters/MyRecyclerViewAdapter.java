@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.example.abhiu.myapplication.R;
@@ -18,7 +17,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     private Context mContext;
     OnItemClickListener mItemClickListener;
-    private String[] mDataset={"road", "light","leakages","grabage","general","hello6","hello7","hello8","hello9","hello10"};
+    private String[] mDataset={"road", "light","leakages","grabage","general"};
 
 
 
