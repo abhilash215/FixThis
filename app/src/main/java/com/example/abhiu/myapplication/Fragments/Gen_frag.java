@@ -14,7 +14,9 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
@@ -29,6 +31,7 @@ import java.io.IOException;
 public class Gen_frag extends Fragment {
 
     ImageView iv;
+    Button b2;
 
     private static final int REQUEST_CAMERA = 123, SELECT_FILE=1; // integer request code for camera
 
@@ -73,7 +76,7 @@ public class Gen_frag extends Fragment {
         // Inflate the layout for this fragment
          View view= inflater.inflate(R.layout.fragment_gen_frag, container, false);
 
-
+        b2=(Button)view.findViewById(R.id.buttonother);
         iv =(ImageView) view.findViewById(R.id.camera_other);
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +84,13 @@ public class Gen_frag extends Fragment {
                 //Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//start new activity for image capture
                 //getActivity().startActivityForResult(i, CAMERA_REQUEST);
                 selectImage();
+            }
+        });
+
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"Complaint successfully registered", Toast.LENGTH_LONG).show();
             }
         });
 

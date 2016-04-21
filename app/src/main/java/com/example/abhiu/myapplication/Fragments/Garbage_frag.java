@@ -15,8 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
@@ -87,7 +89,7 @@ public class Garbage_frag extends Fragment {
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getContext(),R.array.dumpings,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
+       Button b3=(Button)view.findViewById(R.id.buttongarbage);
         iv =(ImageView) view.findViewById(R.id.camera_garbage);
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +100,13 @@ public class Garbage_frag extends Fragment {
             }
         });
 
-
+        b3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"Complaint successfully registered", Toast.LENGTH_LONG).show();
+                //Displayfun();
+            }
+        });
 
 return  view;
     }

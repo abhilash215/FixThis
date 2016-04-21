@@ -30,13 +30,19 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
                 .addToBackStack(null)
                .commit();
 
+
+
+
     }
 
-
+// to set the title in fragments
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
     }
-    
+
+
+
+    // for menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

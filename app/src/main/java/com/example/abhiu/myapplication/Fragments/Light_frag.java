@@ -16,8 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
@@ -32,6 +34,7 @@ import java.io.IOException;
 public class Light_frag extends Fragment {
 
 ImageView iv;
+    Button b1;
 
     private static final int REQUEST_CAMERA = 123, SELECT_FILE=1; // integer request code for camera
 
@@ -109,7 +112,7 @@ ImageView iv;
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-
+        b1=(Button)rootView.findViewById(R.id.buttonlight);
         iv =(ImageView) rootView.findViewById(R.id.camera_light);
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +120,15 @@ ImageView iv;
                 //Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//start new activity for image capture
                 //getActivity().startActivityForResult(i, CAMERA_REQUEST);
                 selectImage();
+            }
+        });
+
+
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"Complaint successfully registered", Toast.LENGTH_LONG).show();
+
             }
         });
 

@@ -15,7 +15,9 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
@@ -29,6 +31,11 @@ import java.io.IOException;
 
 public class Road_frag extends Fragment {
     ImageView iv;
+    Button b;
+    Button b1;
+    Button b2;
+    Button b3;
+    Button b4;
 
     private static final int REQUEST_CAMERA = 123, SELECT_FILE=1; // integer request code for camera
 
@@ -98,6 +105,24 @@ public class Road_frag extends Fragment {
                selectImage();
            }
        });
+
+        b=(Button)rootView.findViewById(R.id.buttonroad);
+
+
+
+
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getActivity(),"Complaint successfully registered",Toast.LENGTH_LONG).show();
+            Displayfun();
+            }
+        });
+
+
+
+
         return rootView;
     }
 
@@ -175,4 +200,9 @@ public class Road_frag extends Fragment {
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+    void Displayfun()
+    {
+        Toast.makeText(getActivity(),"Complaint successfully registered",Toast.LENGTH_LONG).show();
+    }
 }
