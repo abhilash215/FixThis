@@ -41,7 +41,7 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
 
     private GoogleApiClient mGoogleApiClient;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private Location mLastLocation;
+    private Location mLastLocation;//last location
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
