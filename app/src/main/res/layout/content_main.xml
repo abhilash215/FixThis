@@ -108,13 +108,21 @@
         android:layout_alignEnd="@+id/user_text" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:src="@drawable/campusaerialview"
         android:id="@+id/imageView"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="41dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:id="@+id/btnlocation"
+        android:layout_alignTop="@+id/user_text"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

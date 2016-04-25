@@ -33,6 +33,7 @@ import java.io.IOException;
 public class Garbage_frag extends Fragment {
 
     ImageView iv;
+    Button bc;
 
     private static final int REQUEST_CAMERA = 123, SELECT_FILE=1; // integer request code for camera
 
@@ -105,6 +106,16 @@ public class Garbage_frag extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getActivity(),"Complaint successfully registered", Toast.LENGTH_LONG).show();
                 //Displayfun();
+            }
+        });
+
+
+        bc=(Button) view.findViewById(R.id.btncancel);
+        bc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(getActivity(),NewReq_Activity.class);
+                startActivity(i);
             }
         });
 

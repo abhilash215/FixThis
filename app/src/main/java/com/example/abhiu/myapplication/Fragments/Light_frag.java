@@ -35,6 +35,7 @@ public class Light_frag extends Fragment {
 
 ImageView iv;
     Button b1;
+    Button bc;
 
     private static final int REQUEST_CAMERA = 123, SELECT_FILE=1; // integer request code for camera
 
@@ -133,6 +134,14 @@ ImageView iv;
         });
 
 
+        bc=(Button)rootView.findViewById(R.id.btncancel);
+        bc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(getActivity(),NewReq_Activity.class);
+                startActivity(i);
+            }
+        });
         return rootView;
 
 

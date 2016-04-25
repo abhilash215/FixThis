@@ -67,4 +67,12 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="2dp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/btncancel"
+        android:layout_alignTop="@+id/buttongarbage"
+        android:layout_toEndOf="@+id/camera_road" />
+
 </RelativeLayout>
