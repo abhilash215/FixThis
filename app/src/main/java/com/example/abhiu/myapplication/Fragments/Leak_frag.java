@@ -32,6 +32,7 @@ import java.io.IOException;
 public class Leak_frag extends Fragment {
 
 ImageView iv;
+    Button bc;
 
     private static final int REQUEST_CAMERA = 123, SELECT_FILE=1; // integer request code for camera
 
@@ -112,6 +113,14 @@ Button  b4=(Button)view.findViewById(R.id.buttonleakage);
 
 
 
+        bc=(Button) view.findViewById(R.id.btncancel);
+        bc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(getActivity(),NewReq_Activity.class);
+                startActivity(i);
+            }
+        });
         return  view;
     }
 
