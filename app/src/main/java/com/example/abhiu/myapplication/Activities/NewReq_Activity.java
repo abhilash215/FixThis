@@ -54,6 +54,7 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace, new RecyclerView_frag())
                 .addToBackStack(null)
                 .commit();
+
 /*///////////////google maps///////////////////
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -69,14 +70,6 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
         bl = (Button) findViewById(R.id.btnlocation);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-
             locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
                     MINIMUM_TIME_BETWEEN_UPDATES,
@@ -88,11 +81,8 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
                 @Override
 
                 public void onClick(View v) {
-
                     showCurrentLocation();
-
                 }
-
             });
 
             return;
@@ -136,11 +126,8 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
             Toast.makeText(NewReq_Activity.this,
 
                     "Provider enabled by the user. GPS turned on",
-
                     Toast.LENGTH_LONG).show();
-
         }
-
     }
 /////////////////////////////////////location/////////////////////////////////
 
@@ -157,7 +144,6 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -220,8 +206,6 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
             default:
                 Toast.makeText(getApplicationContext(), "No complaint selected", Toast.LENGTH_LONG);
         }
-
-
     }
 
 /*
