@@ -43,6 +43,10 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
     EditText passwordET;
     String mName;
 
+    public static String getFIREBASEREF() {
+        return FIREBASEREF;
+    }
+
     /* String Constants */
     private static final String FIREBASEREF = "https://fixthis.firebaseio.com/";
     private static final String FIREBASE_ERROR = "Firebase Error";

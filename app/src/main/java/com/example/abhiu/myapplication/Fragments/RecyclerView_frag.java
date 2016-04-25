@@ -4,16 +4,19 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.abhiu.myapplication.Adapters.MyRecyclerViewAdapter;
 import com.example.abhiu.myapplication.R;
+import com.firebase.client.Firebase;
 
 
 public class RecyclerView_frag extends Fragment
 {
+
     RecyclerView mRecyclerView;
     LinearLayoutManager mLinearLayoutManager;
     //RecyclerView.LayoutManager mLayoutManager;
@@ -33,8 +36,8 @@ public class RecyclerView_frag extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+         View rootview = inflater.inflate(R.layout.fragment_recycler_view_frag, container, false);
         // Inflate the layout for this fragment
-        final View rootview = inflater.inflate(R.layout.fragment_recycler_view_frag, container, false);
         mRecyclerView = (RecyclerView) rootview.findViewById(R.id.recycleViewId);
         mRecyclerView.setHasFixedSize(true);
         /////---------------///////////////////////////////////////////////
@@ -48,6 +51,7 @@ public class RecyclerView_frag extends Fragment
 
         ///////////////////////////////////////////////////////////////////////////////////////////
         final loadFragment loadFragmentInterface;
+
         loadFragmentInterface = (loadFragment) getContext();
 
         mRecyclerViewAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {

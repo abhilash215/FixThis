@@ -1,26 +1,40 @@
 package com.example.abhiu.myapplication.Fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.abhiu.myapplication.Activities.LoginActivity;
 import com.example.abhiu.myapplication.Activities.NewReq_Activity;
+import com.example.abhiu.myapplication.Complaint;
 import com.example.abhiu.myapplication.R;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -30,13 +44,19 @@ import java.io.IOException;
 
 
 public class Road_frag extends Fragment {
+    Complaint cmp = new Complaint();
+   public int cnt;
+    public String str="";
     ImageView iv;
     Button b;
     Button bc;
-
+    EditText landmark,descr,reporter;
     private static final int REQUEST_CAMERA = 123, SELECT_FILE=1; // integer request code for camera
+    private LocationManager locationManager;
+   // SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-
+    Firebase road_firebase = new Firebase(LoginActivity.getFIREBASEREF()).child("Road Complaints");
+    /////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////
     private void selectImage() {
         final CharSequence[] items = { "Take Photo", "Choose from Library", "Cancel" };
@@ -91,36 +111,52 @@ public class Road_frag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                           Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View rootView =  inflater.inflate(R.layout.fragment_road, container, false);
+       final View rootView =  inflater.inflate(R.layout.fragment_road, container, false);
 
         iv =(ImageView) rootView.findViewById(R.id.camera_road);
-       iv.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               //Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//start new activity for image capture
-               //getActivity().startActivityForResult(i, CAMERA_REQUEST);
-               selectImage();
-           }
-       });
+        landmark = (EditText) rootView.findViewById(R.id.road_landmark);
+        descr = (EditText) rootView.findViewById(R.id.road_desc);
+        reporter = (EditText) rootView.findViewById(R.id.user_road);
+
+                iv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//start new activity for image capture
+                        //getActivity().startActivityForResult(i, CAMERA_REQUEST);
+                        selectImage();
+                    }
+                });
 
         b=(Button)rootView.findViewById(R.id.buttonroad);
-
-
-
-
-
-
+//        cmp.setLandmark(landmark.getText().toString());
+//        cmp.setDescription(descr.getText().toString());
+//        cmp.setReporter(reporter.getText().toString());
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(getActivity(),"Complaint successfully registered",Toast.LENGTH_LONG).show();
             Displayfun();
+                // cnt = cmp.getCount();
+
+                cnt++;
+                cmp.setCount(cnt);
+                str = "Road Complaint " + cnt ;
+                //road_firebase.setValue(str);
+
+                cmp.setLandmark(landmark.getText().toString());
+                cmp.setDescription(descr.getText().toString());
+                cmp.setReporter(reporter.getText().toString());
+
+                /////////////////////////////////////////////
+
+                //////////////////////////////////////////
+                road_firebase.child(str).setValue(cmp);
             }
         });
 
 
         bc=(Button)rootView.findViewById(R.id.btncancel);
-bc.setOnClickListener(new View.OnClickListener() {
+        bc.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
         Intent i=new Intent(getActivity(),NewReq_Activity.class);
@@ -131,6 +167,14 @@ bc.setOnClickListener(new View.OnClickListener() {
         return rootView;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences setting = getContext().getSharedPreferences("count", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = setting.edit();
+        editor.putInt("count",cmp.getCount()).commit();
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -138,6 +182,10 @@ bc.setOnClickListener(new View.OnClickListener() {
         // Set title bar
         ((NewReq_Activity) getActivity())
                 .setActionBarTitle("Road/Potholes");
+
+
+        SharedPreferences setting = getContext().getSharedPreferences("count", Context.MODE_PRIVATE);
+        cnt = setting.getInt("count",cmp.getCount());
 
     }
 
@@ -175,6 +223,8 @@ bc.setOnClickListener(new View.OnClickListener() {
         }
 
         iv.setImageBitmap(thumbnail);
+        cmp.setBmp(thumbnail);
+
     }
 
     @SuppressWarnings("deprecation")
@@ -202,6 +252,7 @@ bc.setOnClickListener(new View.OnClickListener() {
         bm = BitmapFactory.decodeFile(selectedImagePath, options);
 
         iv.setImageBitmap(bm);
+        cmp.setBmp(bm);
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
