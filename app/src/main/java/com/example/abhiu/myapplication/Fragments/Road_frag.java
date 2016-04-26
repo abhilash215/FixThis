@@ -8,17 +8,13 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,10 +27,7 @@ import com.example.abhiu.myapplication.Activities.LoginActivity;
 import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.Complaint;
 import com.example.abhiu.myapplication.R;
-import com.firebase.client.ChildEventListener;
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -146,14 +139,9 @@ public class Road_frag extends Fragment {
                 cmp.setLandmark(landmark.getText().toString());
                 cmp.setDescription(descr.getText().toString());
                 cmp.setReporter(reporter.getText().toString());
-
-                /////////////////////////////////////////////
-
-                //////////////////////////////////////////
                 road_firebase.child(str).setValue(cmp);
             }
         });
-
 
         bc=(Button)rootView.findViewById(R.id.btncancel);
         bc.setOnClickListener(new View.OnClickListener() {
@@ -163,7 +151,6 @@ public class Road_frag extends Fragment {
         startActivity(i);
     }
 });
-
         return rootView;
     }
 
@@ -175,22 +162,17 @@ public class Road_frag extends Fragment {
         editor.putInt("count",cmp.getCount()).commit();
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Set title bar
         ((NewReq_Activity) getActivity())
                 .setActionBarTitle("Road/Potholes");
-
-
         SharedPreferences setting = getContext().getSharedPreferences("count", Context.MODE_PRIVATE);
         cnt = setting.getInt("count",cmp.getCount());
-
     }
 
     private static final String ARG_SECTION_NUMBER="section_number";
-
     public static  final Road_frag  newInstance(int sectionNumber){
         Road_frag fragment=new Road_frag();
         Bundle args=new Bundle();

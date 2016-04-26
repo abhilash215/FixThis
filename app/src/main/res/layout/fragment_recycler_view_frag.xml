@@ -1,5 +1,6 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relative_layout_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,15 +8,27 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 <Toolbar
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    app:layout_scrollFlags="scroll|enterAlways|snap">
 
 </Toolbar>
+    </android.support.design.widget.AppBarLayout>
 
-    <TextView
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frame_recyclerview"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_below="@+id/toolbar">
+
+
+        <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Choose the Category to proceed"
@@ -24,18 +37,22 @@
         android:id="@+id/cat_frag"
         android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal|top" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycleViewId"
-        android:layout_width="match_parent"
-        android:layout_height="430dp"
-        android:paddingTop="5dp"
-        android:layout_marginTop="7dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/cat_frag" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleViewId"
+            android:layout_width="match_parent"
+            android:layout_height="430dp"
+            android:paddingTop="5dp"
+            android:layout_marginTop="7dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/cat_frag"
+            android:layout_gravity="center"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap"/>
 
 
-</RelativeLayout>
+    </FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

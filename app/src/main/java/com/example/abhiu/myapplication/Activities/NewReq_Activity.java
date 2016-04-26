@@ -41,7 +41,7 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
 
     private GoogleApiClient mGoogleApiClient;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private Location mLastLocation;//last location
+    private Location mLastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +51,20 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.setTitle("New Requests");
+
+     /*   ////////////////////view pager////////////
+        ViewPager viewPager=(ViewPager)findViewById(R.id.viewpager);
+       *//* MoviePagerAdapter adapter = new MoviePagerAdapter(getSupportFragmentManager(), new MovieData());
+        viewPager.setAdapter(adapter);*//*
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        ////////////////////view pager////////////*/
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace, new RecyclerView_frag())
                 .addToBackStack(null)
                 .commit();
+
 /*///////////////google maps///////////////////
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -69,14 +80,6 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
         bl = (Button) findViewById(R.id.btnlocation);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-
             locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
                     MINIMUM_TIME_BETWEEN_UPDATES,
@@ -88,11 +91,8 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
                 @Override
 
                 public void onClick(View v) {
-
                     showCurrentLocation();
-
                 }
-
             });
 
             return;
@@ -136,11 +136,8 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
             Toast.makeText(NewReq_Activity.this,
 
                     "Provider enabled by the user. GPS turned on",
-
                     Toast.LENGTH_LONG).show();
-
         }
-
     }
 /////////////////////////////////////location/////////////////////////////////
 
@@ -157,7 +154,6 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -193,35 +189,45 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
 
         switch (type) {
             case 0:
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace, Road_frag.newInstance(type))
-                        .addToBackStack(null)
-                        .commit();
+               android.support.v4.app.FragmentTransaction fragmentTransaction= getSupportFragmentManager().beginTransaction();
+
+                fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+                fragmentTransaction.replace(R.id.frame_replace, Road_frag.newInstance(type));
+                     fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                 break;
             case 1:
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace, Light_frag.newInstance1(type))
-                        .addToBackStack(null)
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.animr, 0, 0, R.anim.anim)
+                        .replace(R.id.frame_replace, Light_frag.newInstance1(type))
+                       .addToBackStack(null)
                         .commit();
                 break;
             case 2:
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace, Leak_frag.newInstance4(type))
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.anim, 0, 0, R.anim.animr).replace(R.id.frame_replace, Leak_frag.newInstance4(type))
+
                         .addToBackStack(null)
                         .commit();
                 break;
             case 3:
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace, Garbage_frag.newInstance3(type))
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.anim, 0, 0, R.anim.animr).replace(R.id.frame_replace, Garbage_frag.newInstance3(type))
                         .addToBackStack(null)
                         .commit();
                 break;
             case 4:
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace, Gen_frag.newInstance5(type))
+                getSupportFragmentManager().beginTransaction().setCustomAnimations(
+                        R.anim.anim, 0, 0, R.anim.animr).replace(R.id.frame_replace, Gen_frag.newInstance5(type))
                         .addToBackStack(null)
                         .commit();
 
             default:
                 Toast.makeText(getApplicationContext(), "No complaint selected", Toast.LENGTH_LONG);
         }
-
-
     }
 
 /*

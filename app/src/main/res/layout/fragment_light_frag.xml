@@ -9,19 +9,21 @@
     <ImageView
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_centerHorizontal="true"
         android:layout_marginLeft="120dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="39dp"
         android:src="@drawable/camera"
-        android:id="@+id/camera_light"/>
+        android:id="@+id/camera_light"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location"
         android:id="@+id/location_light"
-        android:layout_below="@+id/camera_light"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:layout_alignTop="@+id/edit_loc_light"
+        android:layout_alignParentStart="true" />
 
 
     <EditText
@@ -44,32 +46,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="7 digit number on Pole"
-        android:layout_marginTop="240dp"
         android:textSize="20sp"
-        android:id="@+id/pole_number"/>
+        android:id="@+id/pole_number"
+        android:layout_below="@+id/road_desc"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/user_light"
         android:textSize="20dp"
+        android:text="Reporter"
         android:layout_below="@+id/pole_number"
-        android:text="Reporter"/>
+        android:layout_alignParentStart="true" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"
         android:id="@+id/buttonlight"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="52dp" />
+        android:layout_alignTop="@+id/btncancel"
+        android:layout_toEndOf="@+id/location_light" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinner2"
         android:layout_below="@+id/user_light"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
 
@@ -78,7 +80,7 @@
         android:layout_height="wrap_content"
         android:text="Cancel"
         android:id="@+id/btncancel"
-        android:layout_alignTop="@+id/buttonlight"
-        android:layout_toEndOf="@+id/camera_road" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

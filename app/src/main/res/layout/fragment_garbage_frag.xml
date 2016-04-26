@@ -10,11 +10,12 @@
     <ImageView
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_centerHorizontal="true"
         android:layout_marginLeft="120dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="43dp"
         android:src="@drawable/camera"
-        android:id="@+id/camera_garbage"/>
+        android:id="@+id/camera_garbage"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,9 +39,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Description"
-        android:layout_marginTop="195dp"
         android:textSize="20sp"
-        android:id="@+id/editText5" />
+        android:id="@+id/editText5"
+        android:layout_below="@+id/edit_loc_light"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="match_parent"
@@ -48,7 +50,8 @@
         android:id="@+id/user_road"
         android:textSize="20dp"
         android:text="Reporter"
-        android:layout_below="@+id/editText5" />
+        android:layout_below="@+id/editText5"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -63,9 +66,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
         android:layout_below="@+id/user_road"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="2dp" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"

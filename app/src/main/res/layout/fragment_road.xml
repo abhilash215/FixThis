@@ -13,6 +13,7 @@
     android:layout_height="120dp"
     android:src="@drawable/camera"
     android:id="@+id/camera_road"
+    android:layout_marginTop="56dp"
     android:layout_alignParentTop="true"
     android:layout_centerHorizontal="true" />
 
