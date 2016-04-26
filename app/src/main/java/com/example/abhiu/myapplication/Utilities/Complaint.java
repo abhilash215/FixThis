@@ -1,4 +1,4 @@
-package com.example.abhiu.myapplication;
+package com.example.abhiu.myapplication.Utilities;
 
 import android.graphics.Bitmap;
 

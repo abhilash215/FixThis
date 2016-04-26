@@ -16,9 +16,9 @@
             android:title="Recent" />
 
         <item
-            android:id="@+id/nav_fav"
+            android:id="@+id/nav_fb"
             android:icon="@drawable/favourites_icon"
-            android:title="Favorites" />
+            android:title="Feedback" />
     </group>
 
     <item android:title="About Me">

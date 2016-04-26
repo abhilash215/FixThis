@@ -252,7 +252,9 @@ public class MainActivity extends AppCompatActivity
 
         if(id==R.id.feedback)
         {
-            return  true;
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+            emailIntent.setType("text/plain");
+            startActivity(emailIntent);
         }
 
         if(id==R.id.about)
@@ -283,6 +285,7 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.nav_recent)
         {
             getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.fade_in, 0, 0, R.anim.anim)
                     .replace(R.id.content_main, Recent_frag.newInstancerecent(R.id.recent_frag))
                     .commit();
         }
@@ -292,9 +295,11 @@ public class MainActivity extends AppCompatActivity
             startActivity(i);
 
         }
-        else if (id == R.id.nav_fav)
+        else if (id == R.id.nav_fb)
         {
-
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+            emailIntent.setType("text/plain");
+            startActivity(emailIntent);
         }
         else if (id == R.id.abt_app)
         {
@@ -303,6 +308,7 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.abt_me)
         {
             getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.fade_in,0,0,R.anim.anim)
                     .replace(R.id.content_main, User_Profile_frag.newInstanceuser(R.id.user_profile))
                     .commit();
 

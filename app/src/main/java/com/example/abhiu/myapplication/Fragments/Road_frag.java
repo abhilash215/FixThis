@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 import com.example.abhiu.myapplication.Activities.LoginActivity;
 import com.example.abhiu.myapplication.Activities.NewReq_Activity;
-import com.example.abhiu.myapplication.Complaint;
+import com.example.abhiu.myapplication.Utilities.Complaint;
 import com.example.abhiu.myapplication.R;
 import com.firebase.client.Firebase;
 

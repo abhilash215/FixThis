@@ -215,13 +215,13 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
             case 3:
                 getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(
-                                R.anim.anim, 0, 0, R.anim.animr).replace(R.id.frame_replace, Garbage_frag.newInstance3(type))
+                                R.anim.fade_in, 0, 0, R.anim.animr).replace(R.id.frame_replace, Garbage_frag.newInstance3(type))
                         .addToBackStack(null)
                         .commit();
                 break;
             case 4:
                 getSupportFragmentManager().beginTransaction().setCustomAnimations(
-                        R.anim.anim, 0, 0, R.anim.animr).replace(R.id.frame_replace, Gen_frag.newInstance5(type))
+                        R.anim.fade_in,0,0,R.anim.fade_out).replace(R.id.frame_replace, Gen_frag.newInstance5(type))
                         .addToBackStack(null)
                         .commit();
 
