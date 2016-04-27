@@ -1,0 +1,66 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/developers"
+    android:background="@color/colorPrimary"
+    tools:context="com.example.abhiu.myapplication.Fragments.Developer">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Developers"
+        android:layout_marginLeft="125dp"
+        android:textSize="25dp"
+        android:id="@+id/textView3" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/imageView_abhi"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/photo"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FF000000"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp" />
+
+
+    <TextView
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:text="abhi"
+        android:id="@+id/abhitext"
+        android:layout_below="@+id/imageView_abhi"/>
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/imageView_chiranth"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/chiranth"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FF000000"
+        android:layout_below="@+id/abhitext"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="97dp" />
+
+    <TextView
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:id="@+id/chirtxt"
+        android:text="chiranth"
+        android:layout_below="@+id/imageView_chiranth"
+        />
+
+</RelativeLayout>
+</ScrollView>

@@ -24,9 +24,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.abhiu.myapplication.Activities.LoginActivity;
+import com.example.abhiu.myapplication.Activities.MapsActivity;
 import com.example.abhiu.myapplication.Activities.NewReq_Activity;
-import com.example.abhiu.myapplication.Utilities.Complaint;
 import com.example.abhiu.myapplication.R;
+import com.example.abhiu.myapplication.Utilities.Complaint;
 import com.firebase.client.Firebase;
 
 import java.io.ByteArrayOutputStream;
@@ -37,6 +38,8 @@ import java.io.IOException;
 
 
 public class Road_frag extends Fragment {
+
+    FragmentGoogleMap fragmentGoogleMap=new FragmentGoogleMap();
     Complaint cmp = new Complaint();
    public int cnt;
     public String str="";
@@ -110,6 +113,8 @@ public class Road_frag extends Fragment {
         landmark = (EditText) rootView.findViewById(R.id.road_landmark);
         descr = (EditText) rootView.findViewById(R.id.road_desc);
         reporter = (EditText) rootView.findViewById(R.id.user_road);
+        EditText editText=(EditText)rootView.findViewById(R.id.edit_loc_road);
+        editText.setText("Location");
 
                 iv.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -142,6 +147,15 @@ public class Road_frag extends Fragment {
                 road_firebase.child(str).setValue(cmp);
             }
         });
+        Button bl;
+        bl = (Button)rootView.findViewById(R.id.locationroad);
+        bl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Intent i=new Intent(getActivity(), MapsActivity.class);
+                startActivity(i);
+            }
+        });
 
         bc=(Button)rootView.findViewById(R.id.btncancel);
         bc.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +163,7 @@ public class Road_frag extends Fragment {
     public void onClick(View v) {
         Intent i=new Intent(getActivity(),NewReq_Activity.class);
         startActivity(i);
+
     }
 });
         return rootView;
@@ -170,6 +185,8 @@ public class Road_frag extends Fragment {
                 .setActionBarTitle("Road/Potholes");
         SharedPreferences setting = getContext().getSharedPreferences("count", Context.MODE_PRIVATE);
         cnt = setting.getInt("count",cmp.getCount());
+
+
     }
 
     private static final String ARG_SECTION_NUMBER="section_number";

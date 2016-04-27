@@ -16,6 +16,7 @@
         android:id="@+id/new_req"
         android:textStyle="bold"
         android:textSize="17sp"
+        android:transitionName="newrequest"
         android:layout_alignBaseline="@+id/recent"
         android:layout_alignBottom="@+id/recent"
         android:layout_alignParentLeft="true"
@@ -66,17 +67,19 @@
         android:layout_alignParentStart="true" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/favourites_icon"
+        android:layout_width="40dp"
+        android:layout_height="45dp"
+        android:src="@drawable/emergency"
         android:id="@+id/fav_img"
+        android:layout_marginRight="0dp"
         android:layout_above="@+id/my_req"
-        android:layout_alignStart="@+id/recent" />
+        android:layout_alignEnd="@+id/recent_img"
+        android:layout_marginEnd="18dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Favorites"
+        android:text="Emergency"
         android:id="@+id/fav"
         android:layout_marginTop="88dp"
         android:textStyle="bold"
@@ -116,13 +119,5 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="41dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Location"
-        android:id="@+id/btnlocation"
-        android:layout_alignTop="@+id/user_text"
-        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

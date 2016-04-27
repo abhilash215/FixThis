@@ -21,19 +21,16 @@
             android:title="Feedback" />
     </group>
 
-    <item android:title="About Me">
+    <item android:title="About">
         <menu>
             <item
                 android:id="@+id/abt_me"
-                android:icon="@drawable/user_icon"
-                android:title="About Me " />
-            <item
-                android:id="@+id/abt_app"
-                android:icon="@drawable/ic_menu_share"
-                android:title="About Us " />
+                android:title="My Profile"
+                android:icon="@drawable/user_icon"/>
+
             <item
                 android:id="@+id/settings"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/ic_setting_dark"
                 android:title="Settings" />
         </menu>
     </item>

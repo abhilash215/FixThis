@@ -41,7 +41,6 @@ public class User_Profile_frag extends Fragment {
         // Set title bar
         ((MainActivity) getActivity())
                 .setActionBarTitle("User Profile");
-
     }
 
 }

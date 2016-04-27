@@ -11,4 +11,6 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_new__req_activity">New_Req_activity</string>
     <string name="title_activity_new_req_">NewReq_Activity</string>
+    <string name="title_activity_emergency">Emergency</string>
+    <string name="title_activity_map">Map</string>
 </resources>

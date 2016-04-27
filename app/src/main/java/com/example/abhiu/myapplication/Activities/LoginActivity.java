@@ -1,21 +1,11 @@
 package com.example.abhiu.myapplication.Activities;
 
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-
-import com.example.abhiu.myapplication.R;
-
-
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.support.design.widget.Snackbar;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
+import com.example.abhiu.myapplication.R;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -33,7 +23,6 @@ import com.firebase.ui.auth.core.FirebaseLoginError;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
 import java.util.Map;
 
 public class LoginActivity extends FirebaseLoginBaseActivity{
@@ -135,7 +124,7 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
                 mName = (String) authData.getProviderData().get("displayName");
                 break;
         }
-        Toast.makeText(getApplicationContext(), LOGIN_SUCCESS, Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(getApplicationContext(), LOGIN_SUCCESS, Toast.LENGTH_SHORT).show();
         Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
         LoginActivity.this.startActivity(myIntent);
     }
