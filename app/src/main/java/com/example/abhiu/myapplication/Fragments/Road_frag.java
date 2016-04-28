@@ -15,6 +15,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.abhiu.myapplication.Activities.LoginActivity;
@@ -36,27 +41,38 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Road_frag extends Fragment {
 
-    FragmentGoogleMap fragmentGoogleMap=new FragmentGoogleMap();
+    FragmentGoogleMap fragmentGoogleMap = new FragmentGoogleMap();
     Complaint cmp = new Complaint();
-   public int cnt;
-    public String str="";
+    public int cnt;
+    int pagerCount=0;
+    public String str = "";
     ImageView iv;
     Button b;
     Button bc;
-    EditText landmark,descr,reporter;
-    private static final int REQUEST_CAMERA = 123, SELECT_FILE=1; // integer request code for camera
+    EditText landmark, descr, reporter;
+    private static final int REQUEST_CAMERA = 123, SELECT_FILE = 1; // integer request code for camera
     private LocationManager locationManager;
-   // SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+    // SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
     Firebase road_firebase = new Firebase(LoginActivity.getFIREBASEREF()).child("Road Complaints");
     /////////////////////////////////////////////////////////////////////////////////////////////////
+    int[] mResources = {
+            R.drawable.road,
+            R.drawable.light,R.drawable.forrest_gump,R.drawable.frozen,R.drawable.harry2,R.drawable.hunger_games
+    };
+    ViewPager mViewPager;
+    MyPagerAdapter myPagerAdapter;
     ///////////////////////////////////////////////////////////////////////////////////////////////
     private void selectImage() {
-        final CharSequence[] items = { "Take Photo", "Choose from Library", "Cancel" };
+        final CharSequence[] items = {"Take Photo", "Choose from Library", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Add Photo!");
         builder.setItems(items, new DialogInterface.OnClickListener() {
@@ -82,8 +98,7 @@ public class Road_frag extends Fragment {
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public Road_frag()
-    {
+    public Road_frag() {
 
     }
 
@@ -106,36 +121,60 @@ public class Road_frag extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                          Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       final View rootView =  inflater.inflate(R.layout.fragment_road, container, false);
-
-        iv =(ImageView) rootView.findViewById(R.id.camera_road);
+        final View rootView = inflater.inflate(R.layout.fragment_road, container, false);
+        /////////////////////////////////////// viewpager //////////////////////////////////////
+        myPagerAdapter = new MyPagerAdapter(getContext());
+        mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager_id);
+        mViewPager.setCurrentItem(0);
+        mViewPager.setAdapter(myPagerAdapter);
+        ////////////timer //////////////
+        Timer timer  = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (pagerCount <= 5) {
+                           mViewPager.setCurrentItem(pagerCount);
+                            pagerCount++;
+                        } else {
+                         pagerCount = 0;
+                            mViewPager.setCurrentItem(pagerCount);
+                        }
+                    }
+                });
+            }
+        }, 500, 3000);
+        ///////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////
+        iv = (ImageView) rootView.findViewById(R.id.camera_road);
         landmark = (EditText) rootView.findViewById(R.id.road_landmark);
         descr = (EditText) rootView.findViewById(R.id.road_desc);
         reporter = (EditText) rootView.findViewById(R.id.user_road);
-        EditText editText=(EditText)rootView.findViewById(R.id.edit_loc_road);
+        EditText editText = (EditText) rootView.findViewById(R.id.edit_loc_road);
 
-
-        CollapsingToolbarLayout collapsingToolbarLayout=(CollapsingToolbarLayout)rootView.findViewById(R.id.main_collapsing);
+        ///////////// collapsing toolbar ////////////////////////////////////////////////////////////
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) rootView.findViewById(R.id.main_collapsing);
         collapsingToolbarLayout.setTitle("Road");
-        ImageView imageView=(ImageView)rootView.findViewById(R.id.mainbackdrop);
-        imageView.setImageResource(R.drawable.road);
-
-
+        //ImageView imageView = (ImageView) rootView.findViewById(R.id.mainbackdrop);
+        //imageView.setImageResource(R.drawable.road);
+        ////////////////////////////////////////////////////////////////////////////////
 
         editText.setText("Location");
 
-                iv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//start new activity for image capture
-                        //getActivity().startActivityForResult(i, CAMERA_REQUEST);
-                        selectImage();
-                    }
-                });
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//start new activity for image capture
+                //getActivity().startActivityForResult(i, CAMERA_REQUEST);
+                selectImage();
+            }
+        });
 
-        b=(Button)rootView.findViewById(R.id.buttonroad);
+        b = (Button) rootView.findViewById(R.id.buttonroad);
 //        cmp.setLandmark(landmark.getText().toString());
 //        cmp.setDescription(descr.getText().toString());
 //        cmp.setReporter(reporter.getText().toString());
@@ -143,12 +182,12 @@ public class Road_frag extends Fragment {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(getActivity(),"Complaint successfully registered",Toast.LENGTH_LONG).show();
-            Displayfun();
+                Displayfun();
                 // cnt = cmp.getCount();
 
                 cnt++;
                 cmp.setCount(cnt);
-                str = "Road Complaint " + cnt ;
+                str = "Road Complaint " + cnt;
                 //road_firebase.setValue(str);
 
                 cmp.setLandmark(landmark.getText().toString());
@@ -158,24 +197,24 @@ public class Road_frag extends Fragment {
             }
         });
         Button bl;
-        bl = (Button)rootView.findViewById(R.id.locationroad);
+        bl = (Button) rootView.findViewById(R.id.locationroad);
         bl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent i=new Intent(getActivity(), MapsActivity.class);
+                Intent i = new Intent(getActivity(), MapsActivity.class);
                 startActivity(i);
             }
         });
 
-        bc=(Button)rootView.findViewById(R.id.btncancel);
+        bc = (Button) rootView.findViewById(R.id.btncancel);
         bc.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        Intent i=new Intent(getActivity(),NewReq_Activity.class);
-        startActivity(i);
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), NewReq_Activity.class);
+                startActivity(i);
 
-    }
-});
+            }
+        });
         return rootView;
     }
 
@@ -184,7 +223,7 @@ public class Road_frag extends Fragment {
         super.onPause();
         SharedPreferences setting = getContext().getSharedPreferences("count", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = setting.edit();
-        editor.putInt("count",cmp.getCount()).commit();
+        editor.putInt("count", cmp.getCount()).commit();
     }
 
     @Override
@@ -194,20 +233,20 @@ public class Road_frag extends Fragment {
         ((NewReq_Activity) getActivity())
                 .setActionBarTitle("Road/Potholes");
         SharedPreferences setting = getContext().getSharedPreferences("count", Context.MODE_PRIVATE);
-        cnt = setting.getInt("count",cmp.getCount());
+        cnt = setting.getInt("count", cmp.getCount());
 
 
     }
 
-    private static final String ARG_SECTION_NUMBER="section_number";
-    public static  final Road_frag  newInstance(int sectionNumber){
-        Road_frag fragment=new Road_frag();
-        Bundle args=new Bundle();
+    private static final String ARG_SECTION_NUMBER = "section_number";
+
+    public static final Road_frag newInstance(int sectionNumber) {
+        Road_frag fragment = new Road_frag();
+        Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
-        return  fragment;
+        return fragment;
     }
-
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -239,7 +278,7 @@ public class Road_frag extends Fragment {
     @SuppressWarnings("deprecation")
     private void onSelectFromGalleryResult(Intent data) {
         Uri selectedImageUri = data.getData();
-        String[] projection = { MediaStore.MediaColumns.DATA };
+        String[] projection = {MediaStore.MediaColumns.DATA};
         Cursor cursor = getActivity().managedQuery(selectedImageUri, projection, null, null,
                 null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
@@ -266,8 +305,49 @@ public class Road_frag extends Fragment {
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    void Displayfun()
-    {
-        Toast.makeText(getActivity(),"Complaint successfully registered",Toast.LENGTH_LONG).show();
+    void Displayfun() {
+        Toast.makeText(getActivity(), "Complaint successfully registered", Toast.LENGTH_LONG).show();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //////////// adapter class here ////////////////
+    public class MyPagerAdapter extends PagerAdapter {
+        int count;
+        Context mContext;
+        LayoutInflater mLayoutInflater;
+
+        public MyPagerAdapter(Context context) {
+            super();
+            mContext = context;
+            mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public int getCount() {
+            return mResources.length;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == ((LinearLayout) object);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
+
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.collapseImages);
+            imageView.setImageResource(mResources[position]);
+
+            container.addView(itemView);
+
+            return itemView;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((LinearLayout) object);
+        }
+        ///////////////////////////////////////////////////////////////////////////////////////////
     }
 }

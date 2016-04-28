@@ -79,9 +79,8 @@ public class MainActivity extends AppCompatActivity
         recent_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main, Recent_frag.newInstancerecent(R.id.recent_frag))
-                        .commit();
+                Intent i2 = new Intent(MainActivity.this, RecentActivity.class);
+                startActivity(i2);
             }
         });
 

@@ -36,6 +36,11 @@
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"
                 />
+            <android.support.v4.view.ViewPager
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/viewpager_id">
+            </android.support.v4.view.ViewPager>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/main.toolbar"
