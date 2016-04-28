@@ -27,6 +27,9 @@ android {
         exclude 'META-INF/NOTICE' // will not include NOTICE file
         exclude 'META-INF/LICENSE' // will not include LICENSE file
     }
+    repositories {
+        mavenCentral()
+    }
 }
 
 dependencies {
@@ -45,4 +48,5 @@ dependencies {
     compile 'com.firebase:firebase-client-android:2.5.1'
     compile 'com.firebaseui:firebase-ui:0.3.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.markushi:android-ui:1.2'
 }

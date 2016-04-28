@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -114,6 +115,15 @@ public class Road_frag extends Fragment {
         descr = (EditText) rootView.findViewById(R.id.road_desc);
         reporter = (EditText) rootView.findViewById(R.id.user_road);
         EditText editText=(EditText)rootView.findViewById(R.id.edit_loc_road);
+
+
+        CollapsingToolbarLayout collapsingToolbarLayout=(CollapsingToolbarLayout)rootView.findViewById(R.id.main_collapsing);
+        collapsingToolbarLayout.setTitle("Road");
+        ImageView imageView=(ImageView)rootView.findViewById(R.id.mainbackdrop);
+        imageView.setImageResource(R.drawable.road);
+
+
+
         editText.setText("Location");
 
                 iv.setOnClickListener(new View.OnClickListener() {
