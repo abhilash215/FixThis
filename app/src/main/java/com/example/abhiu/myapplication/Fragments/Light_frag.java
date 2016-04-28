@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -112,6 +113,17 @@ ImageView iv;
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getContext(),R.array.light_defects,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+
+
+        CollapsingToolbarLayout collapsingToolbarLayout=(CollapsingToolbarLayout)rootView.findViewById(R.id.maincollapsinglight);
+        collapsingToolbarLayout.setTitle("Light");
+        ImageView imageView=(ImageView)rootView.findViewById(R.id.mainbackdroplight);
+        imageView.setImageResource(R.drawable.light);
+
+
+
+
 
         b1=(Button)rootView.findViewById(R.id.buttonlight);
         iv =(ImageView) rootView.findViewById(R.id.camera_light);
