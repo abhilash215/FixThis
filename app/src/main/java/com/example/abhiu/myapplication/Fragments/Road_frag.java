@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.abhiu.myapplication.Activities.LoginActivity;
@@ -34,6 +37,7 @@ import com.example.abhiu.myapplication.Activities.MapsActivity;
 import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
 import com.example.abhiu.myapplication.Utilities.Complaint;
+import com.example.abhiu.myapplication.Utilities.GpsLocation;
 import com.firebase.client.Firebase;
 
 import java.io.ByteArrayOutputStream;
@@ -42,13 +46,16 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
 public class Road_frag extends Fragment {
-
+    View rootView;
+    GpsLocation gpsLocation;
+    String userAddress="";
     FragmentGoogleMap fragmentGoogleMap = new FragmentGoogleMap();
     Complaint cmp = new Complaint();
     public int cnt;
@@ -58,6 +65,7 @@ public class Road_frag extends Fragment {
     Button b;
     Button bc;
     EditText landmark, descr, reporter;
+    TextView locationAddress;
     private static final int REQUEST_CAMERA = 123, SELECT_FILE = 1; // integer request code for camera
     private LocationManager locationManager;
     // SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -105,12 +113,6 @@ public class Road_frag extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-      /*  if(requestCode==CAMERA_REQUEST && resultCode== getActivity().RESULT_OK)
-        {
-            Bitmap bitmap=(Bitmap)data.getExtras().get("data");
-            iv.setImageBitmap(bitmap);
-            Toast.makeText(getContext(), "Image Saved in Gallery", Toast.LENGTH_SHORT).show();
-        }*/
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_FILE)
                 onSelectFromGalleryResult(data);
@@ -123,7 +125,8 @@ public class Road_frag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View rootView = inflater.inflate(R.layout.fragment_road, container, false);
+
+        rootView = inflater.inflate(R.layout.fragment_road, container, false);
         /////////////////////////////////////// viewpager //////////////////////////////////////
         myPagerAdapter = new MyPagerAdapter(getContext());
         mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager_id);
@@ -150,14 +153,31 @@ public class Road_frag extends Fragment {
                 }
             }
         }, 500, 3000);
-        ///////////////////////////////
+        //////////////////////////////////Street adderss//////////////////////////////
+//        Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+//
+//        List<Address> addresses  = null;
+//        try {
+//            addresses = geocoder.getFromLocation(gpsLocation.getLatitude(),gpsLocation.getLongitude(), 1);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        String city = addresses.get(0).getLocality();
+//        String state = addresses.get(0).getAdminArea();
+//        String zip = addresses.get(0).getPostalCode();
+//        String country = addresses.get(0).getCountryName();
+//        userAddress = userAddress+city+state+zip+country;
         /////////////////////////////////////////////////////////////////////////////////////////
         iv = (ImageView) rootView.findViewById(R.id.camera_road);
         landmark = (EditText) rootView.findViewById(R.id.road_landmark);
         descr = (EditText) rootView.findViewById(R.id.road_desc);
         reporter = (EditText) rootView.findViewById(R.id.user_road);
+       locationAddress = (TextView) rootView.findViewById(R.id.location);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("address", Context.MODE_PRIVATE);
+  //      String strAddr = sharedPreferences.getString("address",gpsLocation.getAddress());
+   //   if(sharedPreferences!=null) locationAddress.setText();
         EditText editText = (EditText) rootView.findViewById(R.id.edit_loc_road);
-
         ///////////// collapsing toolbar ////////////////////////////////////////////////////////////
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) rootView.findViewById(R.id.main_collapsing);
         collapsingToolbarLayout.setTitle("Road");
@@ -203,8 +223,13 @@ public class Road_frag extends Fragment {
         bl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), MapsActivity.class);
-                startActivity(i);
+               // Intent i = new Intent(getActivity(), MapsActivity.class);
+//                startActivity(i);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.road_coordinator_id, new FragmentGoogleMap().newInstance(),"mapTAG")
+                        .addToBackStack("mapTAG")
+                        .commit();
             }
         });
 
@@ -213,7 +238,7 @@ public class Road_frag extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), NewReq_Activity.class);
-                startActivity(i);
+                startActivityForResult(i,1);
 
             }
         });
@@ -228,6 +253,8 @@ public class Road_frag extends Fragment {
         editor.putInt("count", cmp.getCount()).commit();
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -236,7 +263,6 @@ public class Road_frag extends Fragment {
                 .setActionBarTitle("Road/Potholes");
         SharedPreferences setting = getContext().getSharedPreferences("count", Context.MODE_PRIVATE);
         cnt = setting.getInt("count", cmp.getCount());
-
 
     }
 
@@ -348,8 +374,14 @@ public class Road_frag extends Fragment {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((LinearLayout) object);
+            ((ViewPager) container).removeView((View) object);
         }
-        ///////////////////////////////////////////////////////////////////////////////////////////
+
+
+    }// end of pager adapter class
+
+    //method to set textview address
+    public void updateLocation(String address){
+        locationAddress.setText(address);
     }
-}
+}//end of main class

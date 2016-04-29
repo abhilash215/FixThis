@@ -1,8 +1,13 @@
 package com.example.abhiu.myapplication.Activities;
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -11,22 +16,82 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.abhiu.myapplication.Fragments.Recent_frag;
 import com.example.abhiu.myapplication.Fragments.User_Profile_frag;
 import com.example.abhiu.myapplication.R;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.model.people.Person;
+import com.squareup.picasso.Picasso;
+
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
+///////////////////////////////////////////////////////////////////////////////////////////
+//    private static final int RC_SIGN_IN = 0;
+//    // Logcat tag
+//    private static final String TAG = "MainActivity";
+//    // Profile pic image size in pixels
+//    private static final int PROFILE_PIC_SIZE = 400;
+//
+//    // Google client to interact with Google API
+//    private GoogleApiClient mGoogleApiClient;
+//
+//    /**
+//     * A flag indicating that a PendingIntent is in progress and prevents us
+//     * from starting further intents.
+//     */
+//    private boolean mIntentInProgress;
+//
+//    private boolean mSignInClicked;
+//
+//    private ConnectionResult mConnectionResult;
 
+    private ImageView imgProfilePic;
+    private TextView txtName, txtEmail;
+    String name,email;
+      Uri profilePicUrl;
+    String strProfilePic;
+   public SharedPreferences sharedPreferences ;
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ///////////////////////////////Google login/////////////////////////////////////////////////////
+
+//        mGoogleApiClient = new GoogleApiClient.Builder(this)
+//                .addConnectionCallbacks(this)
+//                .addOnConnectionFailedListener(this).addApi(Plus.API)
+//                .addScope(Plus.SCOPE_PLUS_LOGIN).build();
+        sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+
+       // profilePicUrl =
+       // imgProfilePic.setImageURI(profilePicUrl);
+        strProfilePic = sharedPreferences.getString("profile_pic","No Image found");
+        name = sharedPreferences.getString("name","No Name found");
+        email = sharedPreferences.getString("email","No Email found");
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.setTitle("FixThis");
@@ -39,29 +104,25 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
+        View headerView = navigationView.getHeaderView(0); // to set header values
+        ////////////////////////////////setting navigation drawer profile details////////////////////////////////////////////////
+        imgProfilePic = (ImageView) headerView.findViewById(R.id.imageView_h);
+        txtName = (TextView) headerView.findViewById(R.id.user_name_id);
+        txtEmail = (TextView) headerView.findViewById(R.id.textView);
+        txtName.setText(name);
+        txtEmail.setText(email);
+        Picasso.with(this).load(strProfilePic).into(imgProfilePic);
+        ///////////////////////////////////////////////////////////////////////////////////
         ImageView new_img = (ImageView) findViewById(R.id.new_request_id);
         new_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*  Intent i1 = new Intent(MainActivity.this, NewReq_Activity.class);
-// activity animation//
-                ActivityOptions options = ActivityOptions.makeScaleUpAnimation(v, 0,
-                        0, v.getWidth(), v.getHeight());
-                startActivity(i1, options.toBundle());*/
-
-
 
                 Intent intent = new Intent(MainActivity.this, NewReq_Activity.class);
-// Pass data object in the bundle and populate details activity.
+                // Pass data object in the bundle and populate details activity.
                 ActivityOptionsCompat optionstry = ActivityOptionsCompat.
                         makeSceneTransitionAnimation(MainActivity.this,v , "newrequest");
                 startActivity(intent, optionstry.toBundle());
-
-
-
-
             }
         });
 
@@ -84,20 +145,23 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
         ImageView emg_img = (ImageView) findViewById(R.id.fav_img);
         emg_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i1 = new Intent(MainActivity.this, Emergency.class);
-// activity animation//
+        /////////////////////////////////////////////////// activity animation/////////////////////
                 ActivityOptions options = ActivityOptions.makeScaleUpAnimation(v, 0,
                         0, v.getWidth(), v.getHeight());
                 startActivity(i1, options.toBundle());
-
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
 
@@ -220,4 +284,33 @@ public class MainActivity extends AppCompatActivity
         }
         super.onSaveInstanceState(outState);
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+//    /**
+//     * Background Async task to load user profile picture from url
+//     * */
+//    private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
+//        ImageView bmImage;
+//
+//        public LoadProfileImage(ImageView bmImage) {
+//            this.bmImage = bmImage;
+//        }
+//
+//        protected Bitmap doInBackground(String... urls) {
+//            String urldisplay = urls[0];
+//            Bitmap mIcon11 = null;
+//            try {
+//                InputStream in = new java.net.URL(urldisplay).openStream();
+//                mIcon11 = BitmapFactory.decodeStream(in);
+//            } catch (Exception e) {
+//                Log.e("Error", e.getMessage());
+//                e.printStackTrace();
+//            }
+//            return mIcon11;
+//        }
+//
+//        protected void onPostExecute(Bitmap result) {
+//            bmImage.setImageBitmap(result);
+//        }
+//    }
 }

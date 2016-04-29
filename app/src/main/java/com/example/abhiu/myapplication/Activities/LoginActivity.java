@@ -1,9 +1,14 @@
 package com.example.abhiu.myapplication.Activities;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.util.Base64;
@@ -20,12 +25,15 @@ import com.firebase.client.FirebaseError;
 import com.firebase.ui.auth.core.AuthProviderType;
 import com.firebase.ui.auth.core.FirebaseLoginBaseActivity;
 import com.firebase.ui.auth.core.FirebaseLoginError;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
-public class LoginActivity extends FirebaseLoginBaseActivity{
+public class LoginActivity extends FirebaseLoginBaseActivity {
 
     Firebase firebaseRef;
     EditText userNameET;
@@ -36,15 +44,18 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
         return FIREBASEREF;
     }
 
+
+
+
     /* String Constants */
     private static final String FIREBASEREF = "https://fixthis.firebaseio.com/";
     private static final String FIREBASE_ERROR = "Firebase Error";
     private static final String USER_ERROR = "User Error";
     private static final String LOGIN_SUCCESS = "Login Success";
-    private static final String USER_CREATION_SUCCESS =  "Successfully created user";
-    private static final String USER_CREATION_ERROR =  "User creation error";
-    private static final String EMAIL_INVALID =  "email is invalid :";
-    private static final String LOGGED_OUT =  "Logged out :";
+    private static final String USER_CREATION_SUCCESS = "Successfully created user";
+    private static final String USER_CREATION_ERROR = "User creation error";
+    private static final String EMAIL_INVALID = "email is invalid :";
+    private static final String LOGGED_OUT = "Logged out :";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,16 +75,16 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
                 Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
         } catch (PackageManager.NameNotFoundException e) {
-            Toast.makeText(getApplicationContext(),"Package name error",Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), "Package name error", Toast.LENGTH_SHORT);
 
         } catch (NoSuchAlgorithmException e) {
-            Toast.makeText(getApplicationContext(),"No algorith found",Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), "No algorith found", Toast.LENGTH_SHORT);
         }
         ////////////////////////////////////////////////////////////////////////////////
         setContentView(R.layout.activity_login);
 
-        userNameET = (EditText)findViewById(R.id.edit_text_email);
-        passwordET = (EditText)findViewById(R.id.edit_text_password);
+        userNameET = (EditText) findViewById(R.id.edit_text_email);
+        passwordET = (EditText) findViewById(R.id.edit_text_password);
         Button login = (Button) findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +103,27 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
 
 
     }
+    ////////////////////////////// getting data from google /////////////////////////////////////
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+        if(result.isSuccess()) {
+            GoogleSignInAccount googleSignInAccount = result.getSignInAccount();
+          String  name = googleSignInAccount.getDisplayName();
+          String  email = googleSignInAccount.getEmail();
+          Uri profilePicUrl = googleSignInAccount.getPhotoUrl();
+          SharedPreferences  sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("name", name);
+            editor.putString("email", email);
+            editor.putString("profile_pic", profilePicUrl.toString());
+            editor.commit();
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     protected void onFirebaseLoginProviderError(FirebaseLoginError firebaseLoginError) {
@@ -115,6 +147,11 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
     }
 
     @Override
+    public AuthData getAuth() {
+        return super.getAuth();
+    }
+
+    @Override
     public void onFirebaseLoggedIn(AuthData authData) {
         switch (authData.getProvider()) {
             case "password":
@@ -124,7 +161,7 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
                 mName = (String) authData.getProviderData().get("displayName");
                 break;
         }
-     //   Toast.makeText(getApplicationContext(), LOGIN_SUCCESS, Toast.LENGTH_SHORT).show();
+        //   Toast.makeText(getApplicationContext(), LOGIN_SUCCESS, Toast.LENGTH_SHORT).show();
         Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
         LoginActivity.this.startActivity(myIntent);
     }
@@ -156,7 +193,7 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
 
     // create a new user in Firebase
     public void createUser() {
-        if(userNameET.getText() == null ||  !isEmailValid(userNameET.getText().toString())) {
+        if (userNameET.getText() == null || !isEmailValid(userNameET.getText().toString())) {
             return;
         }
         firebaseRef.createUser(userNameET.getText().toString(), passwordET.getText().toString(),
@@ -166,6 +203,7 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
                         Snackbar snackbar = Snackbar.make(userNameET, USER_CREATION_SUCCESS, Snackbar.LENGTH_SHORT);
                         snackbar.show();
                     }
+
                     @Override
                     public void onError(FirebaseError firebaseError) {
                         Snackbar snackbar = Snackbar.make(userNameET, USER_CREATION_ERROR, Snackbar.LENGTH_SHORT);
@@ -173,8 +211,8 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
                     }
                 });
     }
-}
 
+}
 /*
 public class LoginActivity extends AppCompatActivity {
 

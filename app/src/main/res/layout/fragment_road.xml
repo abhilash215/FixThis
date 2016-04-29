@@ -2,6 +2,8 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/road_coordinator_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_scrollFlags="scroll|snap"
@@ -153,20 +155,6 @@
         android:layout_alignEnd="@+id/camera_road" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="dsjddddddd
-            ddddddddddddddddddd
-            ddddddddddddddddddddddddddddddd
-            ddddddddddddddddddddddddddddd
-            ddddddddddddddddddddddddddd
-            ddddddddddddddddddddddddddd
-            wwwwwwwwwwwwwwwwwwwwwwwwwwww
-
-
-            wwwwwwwwwwwwwwwwwwwwwwwwwwwww"
-            android:layout_below="@+id/locationroad"/>
 
 </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
