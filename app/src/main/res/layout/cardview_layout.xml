@@ -6,12 +6,12 @@
     android:layout_margin="5dp"
     android:layout_width="match_parent"
     android:orientation="horizontal"
-    card_view:cardCornerRadius="10dp"
+    card_view:cardCornerRadius="5dp"
     card_view:cardUseCompatPadding="true"
     layout_width="wrap_content"
     layout_height="wrap_content"
     android2:id="@+id/cardList"
-    android2:padding="15dp"
+    android2:background="@color/primary_light"
     android2:layout_width="match_parent"
     android2:layout_height="wrap_content">
 
@@ -19,10 +19,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="75dp"
-    android:background="#FFB74D"
+    android:background="@drawable/pressed"
     android:layout_marginTop="10dp"
-    android:padding="15dp">
-
+    android:padding="10dp">
 
     <TextView
         android:layout_width="wrap_content"

@@ -5,6 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Slide;
+import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +25,13 @@ public class Settings extends AppCompatActivity {
         Toolbar toolbars = (Toolbar) findViewById(R.id.toolbarsettings);
         setSupportActionBar(toolbars);
         setTitle("Settings");
+///////////////////////////////////
+        Transition enterTrans = new Explode();
+        getWindow().setEnterTransition(enterTrans);
 
+        Transition returnTrans = new Slide();
+        getWindow().setReturnTransition(returnTrans);
+        //////////////////////////////////////////////
 
         LinearLayout lmain=(LinearLayout)findViewById(R.id.layout1);
         lmain.setOnClickListener(new View.OnClickListener() {

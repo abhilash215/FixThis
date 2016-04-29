@@ -1,6 +1,7 @@
 package com.example.abhiu.myapplication.Fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,6 +13,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +22,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
 
@@ -30,6 +35,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class Light_frag extends Fragment {
@@ -37,9 +44,14 @@ public class Light_frag extends Fragment {
 ImageView iv;
     Button b1;
     Button bc;
+    int pagerCount=0;
 
     private static final int REQUEST_CAMERA = 123, SELECT_FILE=1; // integer request code for camera
-
+    int[] mResources = {
+            R.drawable.light,
+            R.drawable.light2,R.drawable.light3 };
+    ViewPager mViewPager;
+    MyPagerAdapter myPagerAdapter;
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     private void selectImage() {
@@ -113,15 +125,37 @@ ImageView iv;
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getContext(),R.array.light_defects,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
-
-
         CollapsingToolbarLayout collapsingToolbarLayout=(CollapsingToolbarLayout)rootView.findViewById(R.id.maincollapsinglight);
         collapsingToolbarLayout.setTitle("Light");
-        ImageView imageView=(ImageView)rootView.findViewById(R.id.mainbackdroplight);
-        imageView.setImageResource(R.drawable.light);
-
-
+            /////////////////////////////////////// viewpager //////////////////////////////////////
+        myPagerAdapter = new MyPagerAdapter(getContext());
+        mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager_id);
+        mViewPager.setCurrentItem(0);
+        mViewPager.setAdapter(myPagerAdapter);
+        mViewPager.setPageTransformer(true, new RotateUpTransformer());
+        ////////////timer //////////////
+        Timer timer  = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (pagerCount <= 5) {
+                                mViewPager.setCurrentItem(pagerCount);
+                                pagerCount++;
+                            } else {
+                                pagerCount = 0;
+                                mViewPager.setCurrentItem(pagerCount);
+                            }
+                        }
+                    });
+                }
+            }
+        }, 500, 3000);
+        ///////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -222,7 +256,46 @@ ImageView iv;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
+    //////////// adapter class here ////////////////
+    public class MyPagerAdapter extends PagerAdapter {
+        int count;
+        Context mContext;
+        LayoutInflater mLayoutInflater;
 
+        public MyPagerAdapter(Context context) {
+            super();
+            mContext = context;
+            mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public int getCount() {
+            return mResources.length;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == ((LinearLayout) object);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
+
+            ImageView imageView = (ImageView) itemView.findViewById(R.id.collapseImages);
+            imageView.setImageResource(mResources[position]);
+
+            container.addView(itemView);
+
+            return itemView;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((LinearLayout) object);
+        }
+        ///////////////////////////////////////////////////////////////////////////////////////////
+    }
 
 
 }

@@ -15,8 +15,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -29,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.example.abhiu.myapplication.Activities.LoginActivity;
 import com.example.abhiu.myapplication.Activities.MapsActivity;
 import com.example.abhiu.myapplication.Activities.NewReq_Activity;
@@ -41,8 +40,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -66,8 +63,7 @@ public class Road_frag extends Fragment {
     /////////////////////////////////////////////////////////////////////////////////////////////////
     int[] mResources = {
             R.drawable.road,
-            R.drawable.light,R.drawable.forrest_gump,R.drawable.frozen,R.drawable.harry2,R.drawable.hunger_games
-    };
+            R.drawable.road5,R.drawable.road2,R.drawable.road3,R.drawable.road4 };
     ViewPager mViewPager;
     MyPagerAdapter myPagerAdapter;
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -129,6 +125,8 @@ public class Road_frag extends Fragment {
         mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager_id);
         mViewPager.setCurrentItem(0);
         mViewPager.setAdapter(myPagerAdapter);
+        mViewPager.setPageTransformer(true, new RotateUpTransformer());
+
         ////////////timer //////////////
         Timer timer  = new Timer();
         timer.schedule(new TimerTask() {
@@ -160,7 +158,7 @@ public class Road_frag extends Fragment {
 
         ///////////// collapsing toolbar ////////////////////////////////////////////////////////////
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) rootView.findViewById(R.id.main_collapsing);
-        collapsingToolbarLayout.setTitle("Road");
+     //   collapsingToolbarLayout.setTitle("Road");
         //ImageView imageView = (ImageView) rootView.findViewById(R.id.mainbackdrop);
         //imageView.setImageResource(R.drawable.road);
         ////////////////////////////////////////////////////////////////////////////////

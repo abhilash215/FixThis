@@ -10,7 +10,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +37,10 @@ ImageView iv;
     Button bc;
 
     private static final int REQUEST_CAMERA = 123, SELECT_FILE=1; // integer request code for camera
-
+    int[] mResources = {
+            R.drawable.leak,
+            R.drawable.leak,R.drawable.leak };
+    ViewPager mViewPager;
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     private void selectImage() {
@@ -111,7 +116,10 @@ Button  b4=(Button)view.findViewById(R.id.buttonleakage);
             }
         });
 
-
+        CollapsingToolbarLayout collapsingToolbarLayout=(CollapsingToolbarLayout)view.findViewById(R.id.maincollapsingleak);
+        collapsingToolbarLayout.setTitle("Light");
+        ImageView imageView=(ImageView)view.findViewById(R.id.mainbackdropleak);
+        imageView.setImageResource(R.drawable.leak);
 
         bc=(Button) view.findViewById(R.id.btncancel);
         bc.setOnClickListener(new View.OnClickListener() {

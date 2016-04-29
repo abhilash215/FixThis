@@ -89,9 +89,10 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
                 createUser();
             }
         });
-
-
     }
+
+
+
 
     @Override
     protected void onFirebaseLoginProviderError(FirebaseLoginError firebaseLoginError) {

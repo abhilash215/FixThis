@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/general"
+    android:background="@color/primary_light"
     tools:context="com.example.abhiu.myapplication.Fragments.Gen_frag">
 
     <!-- TODO: Update blank fragment layout -->
@@ -37,7 +38,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Description"
+        android:hint="Description"
         android:layout_marginTop="50dp"
         android:textSize="20sp"
         android:id="@+id/desc_other"
@@ -49,7 +50,7 @@
         android:id="@+id/user_road"
         android:textSize="20dp"
         android:layout_below="@+id/desc_other"
-        android:text="Reporter"/>
+        android:hint="Reporter"/>
 
     <Button
         android:layout_width="wrap_content"

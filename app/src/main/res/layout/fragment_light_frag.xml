@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_scrollFlags="scroll|snap"
-    android:background="@android:color/background_light"
+    android:background="@color/primary_light"
     android:fitsSystemWindows="true"
     >
 
@@ -34,8 +34,13 @@
                 android:layout_height="300dp"
                 android:scaleType="centerCrop"
                 android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax"
-                />
+                app:layout_collapseMode="parallax"     />
+
+            <android.support.v4.view.ViewPager
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/viewpager_id">
+            </android.support.v4.view.ViewPager>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/main.toolbar"
@@ -66,6 +71,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/light"
+    android:background="@color/primary_light"
     android:layout_below="@+id/mainbackdroplight"
     tools:context="com.example.abhiu.myapplication.Fragments.Light_frag">
 
@@ -104,13 +110,14 @@
         android:id="@+id/road_desc"
         android:textSize="20dp"
         android:layout_below="@+id/edit_loc_light"
-        android:text="Issue"/>
+        android:hint="Issue"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="7 digit number on Pole"
         android:textSize="20sp"
+        android:hint="Pole Number"
         android:id="@+id/pole_number"
         android:layout_below="@+id/road_desc"
         android:layout_alignParentStart="true" />
@@ -120,7 +127,7 @@
         android:layout_height="50dp"
         android:id="@+id/user_light"
         android:textSize="20dp"
-        android:text="Reporter"
+        android:hint="Reporter"
         android:layout_below="@+id/pole_number"
         android:layout_alignParentStart="true" />
     <Button
@@ -128,7 +135,6 @@
         android:layout_height="wrap_content"
         android:text="Submit"
         android:id="@+id/buttonlight"
-        android:layout_alignTop="@+id/btncancel"
         android:layout_below="@+id/spinner2"
         android:layout_toEndOf="@+id/location_light" />
 

@@ -4,6 +4,7 @@
     android:id="@+id/relative_layout_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary_light"
     tools:context="com.example.abhiu.myapplication.Fragments.RecyclerView_frag">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,20 +13,51 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-<Toolbar
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_scrollFlags="scroll|enterAlways|snap">
 
-</Toolbar>
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/maincollapsingr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleMarginEnd="64dp" >
+
+            <ImageView
+                android:id="@+id/mainbackdropr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"  />
+
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/main.toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|snap"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_collapseMode="pin"  />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="fill_vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/frame_recyclerview"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/maincollapsingr">
 
 
         <TextView
@@ -45,15 +77,22 @@
             android:layout_width="match_parent"
             android:layout_height="430dp"
             android:paddingTop="5dp"
+            android:background="@color/primary_light"
             android:transitionName="newrequest"
-            android:layout_marginTop="7dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_gravity="center_horizontal|top"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap"
             android:layout_below="@+id/cat_frag"
-            android:layout_gravity="center"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap"/>
+            android:layout_alignParentStart="true"
+            android:drawSelectorOnTop="true"
+            android:layout_marginTop="28dp" />
 
-
-    </FrameLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/panaroma"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/recycleViewId"/>
+    </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

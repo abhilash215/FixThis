@@ -1,8 +1,69 @@
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_scrollFlags="scroll|snap"
+    android:background="@color/primary_light"
+    android:fitsSystemWindows="true"    >
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/main.appbar"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:fitsSystemWindows="true"  >
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/maincollapsingleak"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleMarginEnd="64dp"
+            >
+
+            <ImageView
+                android:id="@+id/mainbackdropleak"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"  />
+
+            <android.support.v4.view.ViewPager
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/viewpager_id">
+            </android.support.v4.view.ViewPager>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/main.toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|snap"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_collapseMode="pin"  />
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="fill_vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/leakage"
+    android:background="@color/primary_light"
+    android:layout_below="@+id/mainbackdropleak"
     tools:context="com.example.abhiu.myapplication.Fragments.Leak_frag">
 
     <!-- TODO: Update blank fragment layout -->
@@ -25,8 +86,6 @@
         android:layout_below="@+id/camera_leak"
         android:textSize="20sp"/>
 
-
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -38,7 +97,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Street or Intersection"
+        android:hint="Street or Intersection"
         android:layout_marginTop="50dp"
         android:id="@+id/street"
         android:textSize="20sp"
@@ -47,7 +106,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Description"
+        android:hint="Description"
         android:textSize="20sp"
         android:id="@+id/editText5"
         android:layout_below="@+id/edit_loc_light"
@@ -59,7 +118,7 @@
         android:id="@+id/user_road"
         android:textSize="20dp"
         android:layout_below="@+id/street"
-        android:text="Reporter"/>
+        android:hint="Reporter"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -68,8 +127,6 @@
         android:layout_marginTop="450dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/buttonleakage" />
-
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,3 +136,12 @@
         android:layout_toEndOf="@+id/camera_road" />
 
 </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_cast_dark"
+        app:layout_anchor="@id/main.appbar"
+        app:layout_anchorGravity="bottom|right|end"   />
+</android.support.design.widget.CoordinatorLayout>

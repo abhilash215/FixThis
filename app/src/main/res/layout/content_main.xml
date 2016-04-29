@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/content_main"
+    android:background="@color/primary_light"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Activities.MainActivity"
     tools:showIn="@layout/app_bar_main">
@@ -15,7 +16,7 @@
         android:text=" New Request"
         android:id="@+id/new_req"
         android:textStyle="bold"
-        android:textSize="17sp"
+        android:textSize="20sp"
         android:transitionName="newrequest"
         android:layout_alignBaseline="@+id/recent"
         android:layout_alignBottom="@+id/recent"
@@ -49,22 +50,11 @@
         android:layout_marginEnd="31dp"
         android:layout_marginTop="66dp"
         android:textStyle="bold"
-        android:textSize="17sp"
+        android:textSize="20sp"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/imageView"
         android:layout_alignEnd="@+id/imageView" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" My Requets"
-        android:id="@+id/my_req"
-        android:textStyle="bold"
-        android:textSize="17sp"
-        android:layout_alignBaseline="@+id/fav"
-        android:layout_alignBottom="@+id/fav"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
     <ImageView
         android:layout_width="40dp"
@@ -72,33 +62,28 @@
         android:src="@drawable/emergency"
         android:id="@+id/fav_img"
         android:layout_marginRight="0dp"
-        android:layout_above="@+id/my_req"
-        android:layout_alignEnd="@+id/recent_img"
-        android:layout_marginEnd="18dp" />
+        android:layout_above="@+id/fav"
+        android:layout_alignEnd="@+id/new_request_id" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Emergency"
         android:id="@+id/fav"
-        android:layout_marginTop="88dp"
         android:textStyle="bold"
-        android:textSize="17sp"
-        android:layout_below="@+id/recent"
-        android:layout_alignRight="@+id/recent"
-        android:layout_alignEnd="@+id/recent" />
+        android:textSize="20sp"
+        android:layout_below="@+id/user_img"
+        android:layout_alignEnd="@+id/new_req" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User"
+        android:text="User Profile"
         android:textStyle="bold"
         android:textSize="20sp"
         android:id="@+id/user_text"
-        android:layout_below="@+id/fav"
-        android:layout_alignRight="@+id/fav"
-        android:layout_alignEnd="@+id/fav"
-        android:layout_marginTop="95dp" />
+        android:layout_below="@+id/user_img"
+        android:layout_alignEnd="@+id/recent" />
 
     <ImageView
         android:layout_width="38dp"
@@ -106,9 +91,9 @@
         android:clickable="true"
         android:src="@drawable/user_icon"
         android:id="@+id/user_img"
-        android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/user_text"
-        android:layout_alignEnd="@+id/user_text" />
+        android:layout_marginTop="127dp"
+        android:layout_below="@+id/recent"
+        android:layout_alignStart="@+id/recent" />
 
     <ImageView
         android:layout_width="match_parent"
