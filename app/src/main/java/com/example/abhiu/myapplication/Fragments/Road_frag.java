@@ -22,6 +22,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,9 @@ import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
 import com.example.abhiu.myapplication.Utilities.Complaint;
 import com.example.abhiu.myapplication.Utilities.GpsLocation;
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
+import com.google.android.gms.auth.api.Auth;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -182,7 +185,7 @@ public class Road_frag extends Fragment {
    //   if(sharedPreferences!=null) locationAddress.setText();
         EditText editText = (EditText) rootView.findViewById(R.id.edit_loc_road);
         ///////////// collapsing toolbar ////////////////////////////////////////////////////////////
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) rootView.findViewById(R.id.main_collapsing);
+        final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) rootView.findViewById(R.id.main_collapsing);
         collapsingToolbarLayout.setTitle("Road");
         //ImageView imageView = (ImageView) rootView.findViewById(R.id.mainbackdrop);
         //imageView.setImageResource(R.drawable.road);
@@ -224,10 +227,21 @@ public class Road_frag extends Fragment {
                 System.out.println(dateFormat.format(date));
                 String timeString = dateFormat.format(date);
                 cmp.setCurrentTime(timeString);
-                //////////////////////////// email /name to firebase/////////////////////////////////
-
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////
+                SharedPreferences sharedPreferences1 = getContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+               String   name = sharedPreferences1.getString("name", "No Name found");
+                cmp.setuName(name);
+               String  email = sharedPreferences1.getString("email","No Email found");
+                cmp.setuEmail(email);
                 //////////////////////////////////////////////////////////////////////////////////
-                road_firebase.child(str).setValue(cmp);
+
+                AuthData authData= road_firebase.getAuth();
+               String type = (String) authData.getProvider();
+                String uid = authData.getUid();
+                cmp.setuId(uid);
+                if(type.matches("PASSWORD")) road_firebase.child(uid).child(str).setValue(cmp);
+                else road_firebase.child(name).child(str).setValue(cmp);
+                Toast.makeText(getContext(),"Complaint submitted successfully",Toast.LENGTH_SHORT).show();
                 //////////////////////////////////////////////////////////////////////////////////
             }
         });

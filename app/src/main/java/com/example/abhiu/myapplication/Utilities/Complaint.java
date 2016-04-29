@@ -62,6 +62,34 @@ public class Complaint {
     }
 
     String streetAddress;
+
+    public String getuName() {
+        return uName;
+    }
+
+    public void setuName(String uName) {
+        this.uName = uName;
+    }
+
+    public String getuId() {
+        return uId;
+    }
+
+    public void setuId(String uId) {
+        this.uId = uId;
+    }
+
+    public String getuEmail() {
+        return uEmail;
+    }
+
+    public void setuEmail(String uEmail) {
+        this.uEmail = uEmail;
+    }
+
+    String uName;
+    String uId;
+    String uEmail;
     Bitmap bmp;
 
     public int getCount() {
