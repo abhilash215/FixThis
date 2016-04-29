@@ -64,8 +64,7 @@ public class Road_frag extends Fragment {
     ImageView iv;
     Button b;
     Button bc;
-    EditText landmark, descr, reporter;
-    TextView locationAddress;
+    EditText landmark, descr, reporter,locationAddress;
     private static final int REQUEST_CAMERA = 123, SELECT_FILE = 1; // integer request code for camera
     private LocationManager locationManager;
     // SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -173,7 +172,7 @@ public class Road_frag extends Fragment {
         landmark = (EditText) rootView.findViewById(R.id.road_landmark);
         descr = (EditText) rootView.findViewById(R.id.road_desc);
         reporter = (EditText) rootView.findViewById(R.id.user_road);
-       locationAddress = (TextView) rootView.findViewById(R.id.location);
+       locationAddress = (EditText) rootView.findViewById(R.id.location);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("address", Context.MODE_PRIVATE);
   //      String strAddr = sharedPreferences.getString("address",gpsLocation.getAddress());
    //   if(sharedPreferences!=null) locationAddress.setText();
@@ -383,5 +382,6 @@ public class Road_frag extends Fragment {
     //method to set textview address
     public void updateLocation(String address){
         locationAddress.setText(address);
+        cmp.setStreetAddress(locationAddress.getText().toString());
     }
 }//end of main class

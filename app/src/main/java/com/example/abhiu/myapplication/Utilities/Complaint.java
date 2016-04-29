@@ -42,6 +42,16 @@ public class Complaint {
 
     String description;
     String reporter;
+
+    public String getStreetAddress() {
+        return streetAddress;
+    }
+
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
+    }
+
+    String streetAddress;
     Bitmap bmp;
 
     public int getCount() {
