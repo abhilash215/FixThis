@@ -43,6 +43,16 @@ public class Complaint {
     String description;
     String reporter;
 
+    public String getCurrentTime() {
+        return currentTime;
+    }
+
+    public void setCurrentTime(String currentTime) {
+        this.currentTime = currentTime;
+    }
+
+    String currentTime;
+
     public String getStreetAddress() {
         return streetAddress;
     }

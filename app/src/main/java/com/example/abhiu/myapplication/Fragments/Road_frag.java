@@ -45,6 +45,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -214,7 +218,17 @@ public class Road_frag extends Fragment {
                 cmp.setLandmark(landmark.getText().toString());
                 cmp.setDescription(descr.getText().toString());
                 cmp.setReporter(reporter.getText().toString());
+                //////////////////////////// current timestamp ////////////////////////////////////
+                DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                Date date = new Date();
+                System.out.println(dateFormat.format(date));
+                String timeString = dateFormat.format(date);
+                cmp.setCurrentTime(timeString);
+                //////////////////////////// email /name to firebase/////////////////////////////////
+
+                //////////////////////////////////////////////////////////////////////////////////
                 road_firebase.child(str).setValue(cmp);
+                //////////////////////////////////////////////////////////////////////////////////
             }
         });
         Button bl;
