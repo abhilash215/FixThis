@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.abhiu.myapplication.Fragments.FragmentGoogleMap;
 import com.example.abhiu.myapplication.Fragments.Garbage_frag;
 import com.example.abhiu.myapplication.Fragments.Gen_frag;
 import com.example.abhiu.myapplication.Fragments.Leak_frag;
@@ -24,7 +25,7 @@ import com.example.abhiu.myapplication.Fragments.RecyclerView_frag;
 import com.example.abhiu.myapplication.Fragments.Road_frag;
 import com.example.abhiu.myapplication.R;
 
-public class NewReq_Activity extends AppCompatActivity implements RecyclerView_frag.loadFragment
+public class NewReq_Activity extends AppCompatActivity implements RecyclerView_frag.loadFragment,FragmentGoogleMap.OnFragmentInteractionListener
     {
 
     protected LocationManager locationManager;
@@ -37,17 +38,8 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
         setSupportActionBar(toolbar);
         this.setTitle("New Requests");
 
-     /*   ////////////////////view pager////////////
-        ViewPager viewPager=(ViewPager)findViewById(R.id.viewpager);
-       *//* MoviePagerAdapter adapter = new MoviePagerAdapter(getSupportFragmentManager(), new MovieData());
-        viewPager.setAdapter(adapter);*//*
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-        ////////////////////view pager////////////*/
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace, new RecyclerView_frag())
-                .addToBackStack(null)
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace, new RecyclerView_frag(),"Complaints")
+                .addToBackStack("Complaints")
                 .commit();
            }
 
@@ -101,21 +93,10 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
             case 0:
                android.support.v4.app.FragmentTransaction fragmentTransaction= getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                fragmentTransaction.replace(R.id.frame_replace, Road_frag.newInstance(type));
-                     fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.replace(R.id.frame_replace, Road_frag.newInstance(type),"RoadTAG");
+                     fragmentTransaction.addToBackStack("RoadTAG");
                         fragmentTransaction.commit();
-              /*
-                Road_frag road_frag=new Road_frag().newInstance(type);
-                road_frag.setSharedElementEnterTransition(new DetailsTransition());
-                road_frag.setEnterTransition(new Fade());
-                road_frag.setExitTransition(new Fade());
-                road_frag.setSharedElementReturnTransition(new DetailsTransition());
 
-                getSupportFragmentManager().beginTransaction()
-                        .addSharedElement(sharedImage,sharedImage.getTransitionName())
-                        .replace(R.id.frame_replace,Road_frag.newInstance(type))
-                        .addToBackStack(null)
-                        .commit();*/
                 break;
             case 1:
                 getSupportFragmentManager().beginTransaction()
@@ -150,6 +131,13 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
                 Toast.makeText(getApplicationContext(), "No complaint selected", Toast.LENGTH_LONG);
         }
     }
+
+        @Override
+        public void onFragmentInteraction(String str) {
+            Road_frag road_frag = (Road_frag) getSupportFragmentManager().findFragmentByTag("RoadTAG");
+            road_frag.updateLocation(str);
+        }
+
         public  class DetailsTransition extends TransitionSet
         {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)

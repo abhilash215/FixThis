@@ -4,9 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.abhiu.myapplication.Fragments.FragmentGoogleMap;
+import com.example.abhiu.myapplication.Fragments.Road_frag;
 import com.example.abhiu.myapplication.R;
 
-public class MapsActivity extends AppCompatActivity {
+public class MapsActivity extends AppCompatActivity implements FragmentGoogleMap.OnFragmentInteractionListener{
 
     //private GoogleMap mMap;
 
@@ -21,11 +22,16 @@ public class MapsActivity extends AppCompatActivity {
         if(savedInstanceState==null){
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.containerMap, new FragmentGoogleMap().newInstance())
+                    .replace(R.id.containerMap, new FragmentGoogleMap().newInstance(),"MapTAG")
                     .commit();
         }
     }
 
+    @Override
+    public void onFragmentInteraction(String str) {
+        Road_frag road_frag = (Road_frag) getSupportFragmentManager().findFragmentByTag("RoadTAG");
+     if(road_frag.isAdded())    road_frag.updateLocation(str);
+    }
 
     /**
      * Manipulates the map once available.

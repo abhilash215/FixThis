@@ -11,9 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
-import android.transition.Slide;
-import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,12 +31,6 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         this.setTitle("FixThis");
 
-//////////////////////////////////////////////////////////
-        Transition exitTrans = new Explode();
-        getWindow().setExitTransition(exitTrans);
-        Transition reenterTrans = new Slide();
-        getWindow().setReenterTransition(reenterTrans);
-        ////////////////////////////////////////////////
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -141,10 +132,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-           ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
-            Intent intent = new Intent(MainActivity.this,Settings.class);
-            startActivity(intent, options.toBundle());
-
+            return true;
         }
 
         if(id==R.id.feedback)
@@ -156,8 +144,7 @@ public class MainActivity extends AppCompatActivity
 
         if(id==R.id.about)
         {
-           // getSupportFragmentManager().beginTransaction()
-
+            return true;
         }
 
         if(id==R.id.home)

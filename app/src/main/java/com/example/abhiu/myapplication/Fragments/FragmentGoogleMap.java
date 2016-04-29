@@ -1,9 +1,19 @@
 package com.example.abhiu.myapplication.Fragments;
 
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.AvoidXfermode;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.abhiu.myapplication.R;
+import com.example.abhiu.myapplication.Utilities.GpsLocation;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -29,6 +40,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 //import com.google.android.gms.maps.MapFragment;
 
 
@@ -41,11 +56,25 @@ public class FragmentGoogleMap extends Fragment implements
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+    OnFragmentInteractionListener mListener; // interface declaration
+    GpsLocation gpsLocation = new GpsLocation();
+
     public FragmentGoogleMap() {
         // Required empty public constructor
     }
-    public static FragmentGoogleMap newInstance(){
-        FragmentGoogleMap fragment=new FragmentGoogleMap();
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mListener = (OnFragmentInteractionListener) getContext();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString() + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    public static FragmentGoogleMap newInstance() {
+        FragmentGoogleMap fragment = new FragmentGoogleMap();
         return fragment;
     }
 
@@ -54,12 +83,13 @@ public class FragmentGoogleMap extends Fragment implements
     private SupportMapFragment mMapFragment;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private Location mLastLocation;
+
     /*****************************************************/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        if(savedInstanceState==null){
+        if (savedInstanceState == null) {
             buildGoogleApiClient();
         }
     }
@@ -76,12 +106,13 @@ public class FragmentGoogleMap extends Fragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.googlemap);
-        if(mMapFragment!=null){
+        if (mMapFragment != null) {
             mMapFragment.getMapAsync(this);
         }
     }
+
     private void buildGoogleApiClient() {
-        if(mGoogleApiClient==null){
+        if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
@@ -96,6 +127,19 @@ public class FragmentGoogleMap extends Fragment implements
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient, mLocationRequest, this);
 
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
     }
@@ -125,6 +169,7 @@ public class FragmentGoogleMap extends Fragment implements
         }
         super.onStop();
     }
+
     /*
     * set location request: frequency, priority
     * */
@@ -137,10 +182,12 @@ public class FragmentGoogleMap extends Fragment implements
     }
 
     LatLng latLng_Prev = null;
+
     @Override
     public void onLocationChanged(Location location) {
         //move camera when location changed
         LatLng latLng_Now = new LatLng(location.getLatitude(), location.getLongitude());
+
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(latLng_Now)      // Sets the center of the map to LatLng (refer to previous snippet)
                 .zoom(17)                   // Sets the zoom
@@ -148,7 +195,7 @@ public class FragmentGoogleMap extends Fragment implements
                 .tilt(30)                   // Sets the tilt of the camera to 30 degrees
                 .build();                   // Creates a CameraPosition from the builder
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        if(latLng_Prev == null){
+        if (latLng_Prev == null) {
             latLng_Prev = latLng_Now;
         }
         //draw line between two locations:
@@ -156,7 +203,7 @@ public class FragmentGoogleMap extends Fragment implements
                 .add(latLng_Prev, latLng_Now)
                 .width(5)
                 .color(Color.RED));
-        latLng_Prev=latLng_Now;
+        latLng_Prev = latLng_Now;
     }
 
     @Override
@@ -165,14 +212,57 @@ public class FragmentGoogleMap extends Fragment implements
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         //mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         //mMap.setMapType(GoogleMap.MAP_TYPE_NONE);
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         mMap.setMyLocationEnabled(true);
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng lat) {
                String   message=("Latitude: " + lat.latitude + "\nLongitude: " + lat.longitude);
+
               //  Toast.makeText(getContext(), "Latitude: " + lat.latitude + "\nLongitude: " + lat.longitude, Toast.LENGTH_SHORT).show();
            Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
+                ///////////// location coordinates ////////////////////////////////////////////////
+                gpsLocation.setLatitude(lat.latitude);
+                 gpsLocation.setLongitude(lat.longitude);
+
+                Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+
+                List<Address> addresses  = null;
+                try {
+                    addresses = geocoder.getFromLocation(lat.latitude,lat.longitude, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                String city = addresses.get(0).getLocality();
+                String state = addresses.get(0).getAdminArea();
+                String zip = addresses.get(0).getPostalCode();
+                String country = addresses.get(0).getCountryName();
+                String strAdress = city + "," +state+","+country+","+zip;
+                gpsLocation.setAddress(strAdress);
+                sendGpsData(strAdress); // interface method
+                SharedPreferences preferences = getActivity().getSharedPreferences("address", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("address",strAdress).commit();
+
+//                Intent i = new Intent();
+//                i.putExtra("AdressStringValue",strAdress);
+//                getActivity().setResult(Activity.RESULT_OK, i);
+//                getActivity().finish();
+                //////////////////////////////////////////////////////////////////////////////
             }
         });
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
@@ -182,7 +272,8 @@ public class FragmentGoogleMap extends Fragment implements
                         .title("self defined marker")
                         .snippet("Hello!")
                         .position(lat).visible(true)
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))//.icon(BitmapDescriptorFactory.fromResource(R.drawable.flag))
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                        //.icon(BitmapDescriptorFactory.fromResource(R.drawable.flag))
                 );
             }
         });
@@ -194,9 +285,18 @@ public class FragmentGoogleMap extends Fragment implements
             }
         });
         // Add a marker in Sydney and move the camera
-        LatLng syr = new LatLng(76, 43);
+        LatLng syr = new LatLng( 43,-76);
         mMap.addMarker(new MarkerOptions().position(syr).title("Marker in Syracuse"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(syr));
 
     }
+    ///////////////////////// intefaces and methods to send back location data //////////////
+    public void sendGpsData(String str){
+        if(mListener!=null) mListener.onFragmentInteraction(str);
+    }
+
+    public  interface OnFragmentInteractionListener{
+        public void onFragmentInteraction(String str);
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////
 }

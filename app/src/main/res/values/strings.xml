@@ -13,4 +13,8 @@
     <string name="title_activity_new_req_">NewReq_Activity</string>
     <string name="title_activity_emergency">Emergency</string>
     <string name="title_activity_map">Map</string>
+
+    <string name="name">name</string>
+    <string name="email">email</string>
+    <string name="profile_pic">profile_pic</string>
 </resources>
