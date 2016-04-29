@@ -246,12 +246,13 @@ public class FragmentGoogleMap extends Fragment implements
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
+                Address addrr = addresses.get(0);
+                String street = addrr.getThoroughfare();
                 String city = addresses.get(0).getLocality();
                 String state = addresses.get(0).getAdminArea();
                 String zip = addresses.get(0).getPostalCode();
                 String country = addresses.get(0).getCountryName();
-                String strAdress = city + "," +state+","+country+","+zip;
+                String strAdress = street+","+city + "," +state+","+country+","+zip;
                 gpsLocation.setAddress(strAdress);
                 sendGpsData(strAdress); // interface method
                 SharedPreferences preferences = getActivity().getSharedPreferences("address", Context.MODE_PRIVATE);
@@ -285,7 +286,7 @@ public class FragmentGoogleMap extends Fragment implements
             }
         });
         // Add a marker in Sydney and move the camera
-        LatLng syr = new LatLng( 43,-76);
+        LatLng syr = new LatLng( 43,-76 );
         mMap.addMarker(new MarkerOptions().position(syr).title("Marker in Syracuse"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(syr));
 
