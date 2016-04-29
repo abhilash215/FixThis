@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.abhiu.myapplication.Activities.LoginActivity;
@@ -34,21 +38,31 @@ import com.example.abhiu.myapplication.Activities.MapsActivity;
 import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
 import com.example.abhiu.myapplication.Utilities.Complaint;
+import com.example.abhiu.myapplication.Utilities.GpsLocation;
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
+import com.google.android.gms.auth.api.Auth;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
 public class Road_frag extends Fragment {
-
+    View rootView;
+    GpsLocation gpsLocation;
+    String userAddress="";
     FragmentGoogleMap fragmentGoogleMap = new FragmentGoogleMap();
     Complaint cmp = new Complaint();
     public int cnt;
@@ -57,7 +71,7 @@ public class Road_frag extends Fragment {
     ImageView iv;
     Button b;
     Button bc;
-    EditText landmark, descr, reporter;
+    EditText landmark, descr, reporter,locationAddress;
     private static final int REQUEST_CAMERA = 123, SELECT_FILE = 1; // integer request code for camera
     private LocationManager locationManager;
     // SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -105,12 +119,6 @@ public class Road_frag extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-      /*  if(requestCode==CAMERA_REQUEST && resultCode== getActivity().RESULT_OK)
-        {
-            Bitmap bitmap=(Bitmap)data.getExtras().get("data");
-            iv.setImageBitmap(bitmap);
-            Toast.makeText(getContext(), "Image Saved in Gallery", Toast.LENGTH_SHORT).show();
-        }*/
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_FILE)
                 onSelectFromGalleryResult(data);
@@ -123,7 +131,8 @@ public class Road_frag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View rootView = inflater.inflate(R.layout.fragment_road, container, false);
+
+        rootView = inflater.inflate(R.layout.fragment_road, container, false);
         /////////////////////////////////////// viewpager //////////////////////////////////////
         myPagerAdapter = new MyPagerAdapter(getContext());
         mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager_id);
@@ -150,16 +159,33 @@ public class Road_frag extends Fragment {
                 }
             }
         }, 500, 3000);
-        ///////////////////////////////
+        //////////////////////////////////Street adderss//////////////////////////////
+//        Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+//
+//        List<Address> addresses  = null;
+//        try {
+//            addresses = geocoder.getFromLocation(gpsLocation.getLatitude(),gpsLocation.getLongitude(), 1);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        String city = addresses.get(0).getLocality();
+//        String state = addresses.get(0).getAdminArea();
+//        String zip = addresses.get(0).getPostalCode();
+//        String country = addresses.get(0).getCountryName();
+//        userAddress = userAddress+city+state+zip+country;
         /////////////////////////////////////////////////////////////////////////////////////////
         iv = (ImageView) rootView.findViewById(R.id.camera_road);
         landmark = (EditText) rootView.findViewById(R.id.road_landmark);
         descr = (EditText) rootView.findViewById(R.id.road_desc);
         reporter = (EditText) rootView.findViewById(R.id.user_road);
+       locationAddress = (EditText) rootView.findViewById(R.id.location);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("address", Context.MODE_PRIVATE);
+  //      String strAddr = sharedPreferences.getString("address",gpsLocation.getAddress());
+   //   if(sharedPreferences!=null) locationAddress.setText();
         EditText editText = (EditText) rootView.findViewById(R.id.edit_loc_road);
-
         ///////////// collapsing toolbar ////////////////////////////////////////////////////////////
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) rootView.findViewById(R.id.main_collapsing);
+        final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) rootView.findViewById(R.id.main_collapsing);
         collapsingToolbarLayout.setTitle("Road");
         //ImageView imageView = (ImageView) rootView.findViewById(R.id.mainbackdrop);
         //imageView.setImageResource(R.drawable.road);
@@ -195,7 +221,28 @@ public class Road_frag extends Fragment {
                 cmp.setLandmark(landmark.getText().toString());
                 cmp.setDescription(descr.getText().toString());
                 cmp.setReporter(reporter.getText().toString());
-                road_firebase.child(str).setValue(cmp);
+                //////////////////////////// current timestamp ////////////////////////////////////
+                DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                Date date = new Date();
+                System.out.println(dateFormat.format(date));
+                String timeString = dateFormat.format(date);
+                cmp.setCurrentTime(timeString);
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////
+                SharedPreferences sharedPreferences1 = getContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+               String   name = sharedPreferences1.getString("name", "No Name found");
+                cmp.setuName(name);
+               String  email = sharedPreferences1.getString("email","No Email found");
+                cmp.setuEmail(email);
+                //////////////////////////////////////////////////////////////////////////////////
+
+                AuthData authData= road_firebase.getAuth();
+                String type = (String) authData.getProvider();
+                String uid = authData.getUid();
+                cmp.setuId(uid);
+                if(type.matches("PASSWORD")) road_firebase.child(uid).child(str).setValue(cmp);
+                else road_firebase.child(name).child(str).setValue(cmp);
+                Toast.makeText(getContext(),"Complaint submitted successfully",Toast.LENGTH_SHORT).show();
+                //////////////////////////////////////////////////////////////////////////////////
             }
         });
         Button bl;
@@ -203,8 +250,13 @@ public class Road_frag extends Fragment {
         bl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), MapsActivity.class);
-                startActivity(i);
+               // Intent i = new Intent(getActivity(), MapsActivity.class);
+//                startActivity(i);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.road_coordinator_id, new FragmentGoogleMap().newInstance(),"mapTAG")
+                        .addToBackStack("mapTAG")
+                        .commit();
             }
         });
 
@@ -213,7 +265,7 @@ public class Road_frag extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), NewReq_Activity.class);
-                startActivity(i);
+                startActivityForResult(i,1);
 
             }
         });
@@ -228,6 +280,8 @@ public class Road_frag extends Fragment {
         editor.putInt("count", cmp.getCount()).commit();
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -236,7 +290,6 @@ public class Road_frag extends Fragment {
                 .setActionBarTitle("Road/Potholes");
         SharedPreferences setting = getContext().getSharedPreferences("count", Context.MODE_PRIVATE);
         cnt = setting.getInt("count", cmp.getCount());
-
 
     }
 
@@ -348,8 +401,15 @@ public class Road_frag extends Fragment {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((LinearLayout) object);
+            ((ViewPager) container).removeView((View) object);
         }
-        ///////////////////////////////////////////////////////////////////////////////////////////
+
+
+    }// end of pager adapter class
+
+    //method to set textview address
+    public void updateLocation(String address){
+        locationAddress.setText(address);
+        cmp.setStreetAddress(locationAddress.getText().toString());
     }
-}
+}//end of main class
