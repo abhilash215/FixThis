@@ -236,7 +236,7 @@ public class Road_frag extends Fragment {
                 //////////////////////////////////////////////////////////////////////////////////
 
                 AuthData authData= road_firebase.getAuth();
-               String type = (String) authData.getProvider();
+                String type = (String) authData.getProvider();
                 String uid = authData.getUid();
                 cmp.setuId(uid);
                 if(type.matches("PASSWORD")) road_firebase.child(uid).child(str).setValue(cmp);
