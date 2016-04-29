@@ -28,12 +28,7 @@
         android:layout_marginTop="50dp"
         android:textSize="20dp"/>
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/frame_recyclerview_1"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_below="@+id/toolbar">
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycleViewId_1"
@@ -49,5 +44,4 @@
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap"/>
 
 
-    </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>
