@@ -1,6 +1,7 @@
 package com.example.abhiu.myapplication.Activities;
 
 import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Build;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.abhiu.myapplication.Fragments.AboutFragment;
 import com.example.abhiu.myapplication.Fragments.FragmentGoogleMap;
 import com.example.abhiu.myapplication.Fragments.Garbage_frag;
 import com.example.abhiu.myapplication.Fragments.Gen_frag;
@@ -57,33 +59,41 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            // Handle action bar item clicks here. The action bar will
+            // automatically handle clicks on the Home/Up button, so long
+            // as you specify a parent activity in AndroidManifest.xml.
+            int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            //noinspection SimplifiableIfStatement
+            if (id == R.id.action_settings) {
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(NewReq_Activity.this);
+                Intent intent = new Intent(NewReq_Activity.this, Settings.class);
+                startActivity(intent, options.toBundle());
+
+            }
+
+            if (id == R.id.feedback) {
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                emailIntent.setType("text/plain");
+                startActivity(emailIntent);
+            }
+
+            if (id == R.id.about) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame_replace, AboutFragment.newInstanceAbout(R.id.aboutapp))
+                        .commit();
+
+            }
+
+            if (id == R.id.home) {
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(i);
+            }
+
+            return super.onOptionsItemSelected(item);
         }
-
-        if (id == R.id.feedback) {
-            return true;
-        }
-
-        if (id == R.id.about) {
-            return true;
-        }
-
-        if (id == R.id.home) {
-            Intent i = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(i);
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 
     @Override

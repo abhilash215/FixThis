@@ -8,8 +8,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,12 +15,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,31 +25,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.example.abhiu.myapplication.Activities.LoginActivity;
-import com.example.abhiu.myapplication.Activities.MapsActivity;
 import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
 import com.example.abhiu.myapplication.Utilities.Complaint;
 import com.example.abhiu.myapplication.Utilities.GpsLocation;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
-import com.google.android.gms.auth.api.Auth;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.security.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -80,7 +69,7 @@ public class Road_frag extends Fragment {
     /////////////////////////////////////////////////////////////////////////////////////////////////
     int[] mResources = {
             R.drawable.road,
-            R.drawable.light,R.drawable.forrest_gump,R.drawable.frozen,R.drawable.harry2,R.drawable.hunger_games
+            R.drawable.road2,R.drawable.road3,R.drawable.road4,R.drawable.road
     };
     ViewPager mViewPager;
     MyPagerAdapter myPagerAdapter;
@@ -138,6 +127,7 @@ public class Road_frag extends Fragment {
         mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager_id);
         mViewPager.setCurrentItem(0);
         mViewPager.setAdapter(myPagerAdapter);
+        mViewPager.setPageTransformer(true, new RotateUpTransformer());
         ////////////timer //////////////
         Timer timer  = new Timer();
         timer.schedule(new TimerTask() {
@@ -159,27 +149,12 @@ public class Road_frag extends Fragment {
                 }
             }
         }, 500, 3000);
-        //////////////////////////////////Street adderss//////////////////////////////
-//        Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-//
-//        List<Address> addresses  = null;
-//        try {
-//            addresses = geocoder.getFromLocation(gpsLocation.getLatitude(),gpsLocation.getLongitude(), 1);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        String city = addresses.get(0).getLocality();
-//        String state = addresses.get(0).getAdminArea();
-//        String zip = addresses.get(0).getPostalCode();
-//        String country = addresses.get(0).getCountryName();
-//        userAddress = userAddress+city+state+zip+country;
-        /////////////////////////////////////////////////////////////////////////////////////////
+
         iv = (ImageView) rootView.findViewById(R.id.camera_road);
         landmark = (EditText) rootView.findViewById(R.id.road_landmark);
         descr = (EditText) rootView.findViewById(R.id.road_desc);
         reporter = (EditText) rootView.findViewById(R.id.user_road);
-       locationAddress = (EditText) rootView.findViewById(R.id.location);
+       locationAddress = (EditText) rootView.findViewById(R.id.edit_loc_road);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("address", Context.MODE_PRIVATE);
   //      String strAddr = sharedPreferences.getString("address",gpsLocation.getAddress());
    //   if(sharedPreferences!=null) locationAddress.setText();

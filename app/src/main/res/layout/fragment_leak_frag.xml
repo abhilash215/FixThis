@@ -20,6 +20,7 @@
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:fitsSystemWindows="true"
+            android:background="@color/primary_light"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
@@ -123,14 +124,14 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Submit"
+        android:hint="Submit"
         android:layout_marginTop="450dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/buttonleakage" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancel"
+        android:hint="Cancel"
         android:id="@+id/btncancel"
         android:layout_alignTop="@+id/buttonleakage"
         android:layout_toEndOf="@+id/camera_road" />

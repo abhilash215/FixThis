@@ -3,12 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_light"
+    android:id="@+id/aboutapp"
     tools:context="com.example.abhiu.myapplication.Fragments.AboutFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About Us"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:id="@+id/name"
+        android:layout_marginTop="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/what"
+        android:textSize="20sp"
+        android:layout_below="@+id/name"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:text="What is Fixthis ?"/>
+
+    <TextView
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:id="@+id/answer"
+        android:text="Fixthis is an app which provides the user with the option to register the complaint with the concerned agency or department.The app allows the user to select the location and also the type of complaint and the complaint can be easily registered.The user info is fetched from their gmail account when they login.  "
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/what"/>
 
 </RelativeLayout>

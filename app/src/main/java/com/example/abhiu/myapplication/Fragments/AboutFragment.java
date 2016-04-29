@@ -27,4 +27,12 @@ public class AboutFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_about, container, false);
     }
 
+    private static final String ARG_SECTION_NUMBER01="section_number";
+    public static  final AboutFragment  newInstanceAbout(int aboutapp){
+        AboutFragment fragment=new AboutFragment();
+        Bundle args=new Bundle();
+        args.putInt(ARG_SECTION_NUMBER01, aboutapp);
+        fragment.setArguments(args);
+        return  fragment;
+    }
 }

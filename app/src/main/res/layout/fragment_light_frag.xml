@@ -23,6 +23,7 @@
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:fitsSystemWindows="true"
+            android:background="@color/primary_light"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
@@ -115,9 +116,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="7 digit number on Pole"
+        android:hint="7 digit number on Pole"
         android:textSize="20sp"
-        android:hint="Pole Number"
         android:id="@+id/pole_number"
         android:layout_below="@+id/road_desc"
         android:layout_alignParentStart="true" />

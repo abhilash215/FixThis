@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_scrollFlags="scroll|snap"
-    android:background="@android:color/background_light"
+    android:id="@+id/road_coordinator_id"
+    android:background="@color/primary_light"
     android:fitsSystemWindows="true"
     >
 
@@ -23,6 +24,7 @@
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:fitsSystemWindows="true"
+            android:background="@color/primary_light"
             app:contentScrim="?attr/colorPrimary"
             app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
@@ -77,15 +79,14 @@
     android:layout_height="120dp"
     android:src="@drawable/camera"
     android:id="@+id/camera_road"
-    android:layout_marginTop="56dp"
     android:layout_alignParentTop="true"
     android:layout_centerHorizontal="true" />
 
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Location"
+        android:text="Location"
         android:id="@+id/location"
         android:layout_below="@+id/camera_road"
         android:textSize="20sp"/>
@@ -106,7 +107,7 @@
         android:id="@+id/road_landmark"
         android:textSize="20sp"
         android:layout_below="@+id/edit_loc_road"
-        android:text="Landmark"/>
+        android:hint="Landmark"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -114,7 +115,7 @@
         android:id="@+id/road_desc"
         android:textSize="20sp"
         android:layout_below="@+id/road_landmark"
-        android:text="Description"/>
+        android:hint="Description"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -122,7 +123,7 @@
         android:id="@+id/user_road"
         android:textSize="20dp"
         android:layout_below="@+id/road_desc"
-        android:text="Reporter"/>
+        android:hint="Reporter"/>
 
 
 
@@ -152,30 +153,6 @@
         android:layout_alignBottom="@+id/buttonroad"
         android:layout_alignEnd="@+id/camera_road" />
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="dsjddddddd
-            ddddddddddddddddddd
-            ddddddddddddddddddddddddddddddd
-            ddddddddddddddddddddddddddddd
-            ddddddddddddddddddddddddddd
-            ddddddddddddddddddddddddddd
-            wwwwwwwwwwwwwwwwwwwwwwwwwwww
-
-
-            wwwwwwwwwwwwwwwwwwwwwwwwwwwww"
-            android:layout_below="@+id/locationroad"/>
-
 </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
-    <android.support.design.widget.FloatingActionButton
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:src="@drawable/ic_cast_dark"
-        app:layout_anchor="@id/main.appbar"
-        app:layout_anchorGravity="bottom|right|end"
-        />
     </android.support.design.widget.CoordinatorLayout>

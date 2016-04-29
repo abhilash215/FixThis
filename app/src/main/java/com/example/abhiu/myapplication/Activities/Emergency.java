@@ -2,16 +2,17 @@ package com.example.abhiu.myapplication.Activities;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
 
+import com.example.abhiu.myapplication.Fragments.AboutFragment;
 import com.example.abhiu.myapplication.R;
-
-import junit.framework.Test;
 
 public class Emergency extends AppCompatActivity{
 
@@ -19,56 +20,102 @@ public class Emergency extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbaremer);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        LinearLayout linearLayout=(LinearLayout)findViewById(R.id.layoutpolice);
+        linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                ActivityOptions options = ActivityOptions.makeScaleUpAnimation(view, 0,
-                        0, view.getWidth(), view.getHeight());
-                startActivity(intent, options.toBundle());
+                intent.setData(Uri.parse("tel:911"));
+                startActivity(intent);
             }
         });
 
-        Button bh=(Button)findViewById(R.id.button_hosp);
-        bh.setOnClickListener(new View.OnClickListener() {
+
+        LinearLayout linearLayout1=(LinearLayout)findViewById(R.id.sudps);
+        linearLayout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(Emergency.this,Test.class);
-                startActivity(i);
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:711"));
+                startActivity(intent);
             }
         });
+
+        LinearLayout linearLayout3=(LinearLayout)findViewById(R.id.layout2);
+        linearLayout3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:911"));
+                startActivity(intent);
+            }
+        });
+
+
+        LinearLayout linearLayout4=(LinearLayout)findViewById(R.id.dialer);
+        linearLayout4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 
 
-/*
-    public class ShrinkBehavior extends CoordinatorLayout.Behavior<FloatingActionButton>
-    {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-        @Override
-        public boolean layoutDependsOn(CoordinatorLayout parent,FloatingActionButton child, View dependency)
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Emergency.this);
+            Intent intent = new Intent(Emergency.this,Settings.class);
+            startActivity(intent, options.toBundle());
+
+        }
+
+        if(id==R.id.feedback)
         {
-            return dependency instanceof Snackbar.SnackbarLayout;
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+            emailIntent.setType("text/plain");
+            startActivity(emailIntent);
         }
 
-        @Override
-        public boolean onDependencyViewChanged(CoordinatorLayout parent,FloatingActionButton child, View dependency)
+        if(id==R.id.about)
         {
-            float translationY=getFabTranslationYForSnackBar(parent,child);
-            float percentComplete=-translationY/dependency.getHeight();
-            float scaleFactor=1-percentComplete;
-
-            child.setScaleX(scaleFactor);
-            child.setScaleY(scaleFactor);
-            return false;
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame_emer, AboutFragment.newInstanceAbout(R.id.aboutapp))
+                    .commit();
         }
 
-        private float getFabTranslationYForSnackBar(CoordinatorLayout parent, FloatingActionButton child) {
-            return 0;
+        if(id==R.id.home)
+        {
+            Intent i=new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(i);
         }
-    }*/
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
 }

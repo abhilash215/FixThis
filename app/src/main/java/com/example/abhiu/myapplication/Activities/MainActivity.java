@@ -1,6 +1,7 @@
 package com.example.abhiu.myapplication.Activities;
 
 import android.app.ActivityOptions;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.abhiu.myapplication.Fragments.AboutFragment;
 import com.example.abhiu.myapplication.Fragments.Recent_frag;
 import com.example.abhiu.myapplication.Fragments.User_Profile_frag;
 import com.example.abhiu.myapplication.R;
@@ -89,16 +91,22 @@ public class MainActivity extends AppCompatActivity
         emg_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i1 = new Intent(MainActivity.this, Emergency.class);
-// activity animation//
-                ActivityOptions options = ActivityOptions.makeScaleUpAnimation(v, 0,
-                        0, v.getWidth(), v.getHeight());
-                startActivity(i1, options.toBundle());
+                Intent intent = new Intent(MainActivity.this,Emergency.class);
+// Pass data object in the bundle and populate details activity.
+                ActivityOptionsCompat optionstry = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(MainActivity.this, v, "emergency");
+                startActivity(intent, optionstry.toBundle());
 
             }
         });
 
+
+        NotificationManager notificationManager = (NotificationManager)
+                getSystemService(NOTIFICATION_SERVICE);
+
+
     }
+
 
 
     @Override
@@ -123,6 +131,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -132,7 +141,10 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
+            Intent intent = new Intent(MainActivity.this,Settings.class);
+            startActivity(intent, options.toBundle());
+
         }
 
         if(id==R.id.feedback)
@@ -144,7 +156,10 @@ public class MainActivity extends AppCompatActivity
 
         if(id==R.id.about)
         {
-            return true;
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_main, AboutFragment.newInstanceAbout(R.id.aboutapp))
+                    .commit();
+
         }
 
         if(id==R.id.home)

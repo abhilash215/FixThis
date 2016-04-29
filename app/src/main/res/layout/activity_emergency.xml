@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.example.abhiu.myapplication.Activities.Emergency">
+    android:id="@+id/new_content_activity"
+    android:background="@color/primary_light"
+    android:theme="@style/AppTheme.NoActionBar">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:id="@+id/appbar"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbaremer"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -23,54 +22,136 @@
 
     </android.support.design.widget.AppBarLayout>
 
-   <!-- <include layout="@layout/content_emergency" />-->
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_height="match_parent"
-        android:id="@+id/frame_emergency"
-        android:layout_below="@+id/appbar"
-        tools:ignore="MergeRootFrame"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:id="@+id/frame_emer"
+        android:layout_below="@+id/toolbaremer"
+        app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_behavior="com.example.abhiu.myapplication.Activities.Emergency.ShrinkBehavior"
-        android:src="@android:drawable/ic_menu_call" />
-
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Police"
-            android:id="@+id/button6"
-             />
+            android:text="Speed Dial by clicking on the title"
+            android:id="@+id/dial"
+            android:layout_alignBottom="@+id/layoutpolice"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="60dp"
+            android:textSize="20sp"
+            android:transitionName="emergency"
+            android:textStyle="bold"
+            android:textColor="#000000"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DPS"
-            android:id="@+id/button7"
-            android:layout_gravity="center_horizontal|top" />
+        <!--
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/linearLayoutmain">
 
-        <com.google.android.gms.maps.MapView
-            android:apiKey="AIzaSyCB8AN14bLGKs25VKiWSe_Lh9VkOZZNInU"
+                </LinearLayout>-->
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/map_id">
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="130dp"
+            android:id="@+id/layoutpolice"
+            android:background="@drawable/pressed"
+            android:layout_below="@+id/linearLayoutmain">
 
-        </com.google.android.gms.maps.MapView>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_call_black_24dp"
+                android:id="@+id/settings_send"
+                android:layout_margin="5dp"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hospital"
-            android:id="@+id/button_hosp"
-            android:layout_gravity="center" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sendtext"
+                android:layout_margin="5dp"
+                android:textSize="22sp"
+                android:text="Police"  />
 
 
-    </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:id="@+id/sudps"
+            android:background="@drawable/ripple1"
+            android:layout_below="@+id/layoutpolice">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_call_black_24dp"
+                android:id="@+id/ackimg"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ack"
+                android:layout_margin="5dp"
+                android:textSize="22sp"
+                android:text="SU DPS"  />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:id="@+id/layout2"
+            android:background="@drawable/ripple_effect"
+            android:layout_below="@+id/sudps">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_call_black_24dp"
+                android:id="@+id/aboutus"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/abouttext"
+                android:layout_margin="5dp"
+                android:textSize="22sp"
+                android:text="Fire"  />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:id="@+id/dialer"
+            android:layout_below="@+id/layout2"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_call_black_24dp"
+                android:id="@+id/dialemer"
+                android:layout_margin="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/opendialer"
+                android:layout_margin="5dp"
+                android:textSize="22sp"
+                android:text="Open Dialer"  />
+
+        </LinearLayout>
+    </RelativeLayout>
+
 </android.support.design.widget.CoordinatorLayout>
