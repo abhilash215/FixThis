@@ -82,7 +82,7 @@
         android:layout_height="120dp"
         android:layout_marginLeft="120dp"
         android:layout_marginTop="39dp"
-        android:src="@drawable/camera"
+        android:src="@drawable/cameraicon"
         android:id="@+id/camera_light"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />

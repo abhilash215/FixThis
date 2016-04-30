@@ -1,5 +1,7 @@
 package com.example.abhiu.myapplication.Activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -14,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.abhiu.myapplication.R;
+import com.example.abhiu.myapplication.Utilities.ConnectionDetector;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -31,7 +34,10 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
     EditText userNameET;
     EditText passwordET;
     String mName;
-
+    Boolean isInternetPresent = false;
+    // Connection detector class
+    ConnectionDetector cd;
+    private final String INTERNET_ERROR = "Error:No Internet Connection";
     public static String getFIREBASEREF() {
         return FIREBASEREF;
     }
@@ -53,44 +59,50 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
         //////////////////////////////////////////
         firebaseRef = new Firebase(FIREBASEREF);
         super.onCreate(savedInstanceState);
-        ////////////////////////////////////////////////////////////////////////////////
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.example.abhiu.myapplication.Activities",
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            Toast.makeText(getApplicationContext(),"Package name error",Toast.LENGTH_SHORT);
+        ///////////////internet///////////
+        cd = new ConnectionDetector(getApplicationContext());
+        isInternetPresent = cd.isConnectingToInternet();
+        if (isInternetPresent) {
+            ////////////////////////////////////////////////////////////////////////////////
+            try {
+                PackageInfo info = getPackageManager().getPackageInfo(
+                        "com.example.abhiu.myapplication.Activities",
+                        PackageManager.GET_SIGNATURES);
+                for (Signature signature : info.signatures) {
+                    MessageDigest md = MessageDigest.getInstance("SHA");
+                    md.update(signature.toByteArray());
+                    Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+                Toast.makeText(getApplicationContext(), "Package name error", Toast.LENGTH_SHORT);
 
-        } catch (NoSuchAlgorithmException e) {
-            Toast.makeText(getApplicationContext(),"No algorith found",Toast.LENGTH_SHORT);
+            } catch (NoSuchAlgorithmException e) {
+                Toast.makeText(getApplicationContext(), "No algorith found", Toast.LENGTH_SHORT);
+            }
+            ////////////////////////////////////////////////////////////////////////////////
+            setContentView(R.layout.activity_login);
+            userNameET = (EditText) findViewById(R.id.edit_text_email);
+            passwordET = (EditText) findViewById(R.id.edit_text_password);
+            Button login = (Button) findViewById(R.id.login);
+            login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    LoginActivity.this.showFirebaseLoginPrompt();
+                }
+            });
+
+            Button createButton = (Button) findViewById(R.id.button);
+            createButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    createUser();
+                }
+            });
+
+
+        } else {
+            Toast.makeText(LoginActivity.this, INTERNET_ERROR, Toast.LENGTH_LONG).show();
         }
-        ////////////////////////////////////////////////////////////////////////////////
-        setContentView(R.layout.activity_login);
-
-        userNameET = (EditText)findViewById(R.id.edit_text_email);
-        passwordET = (EditText)findViewById(R.id.edit_text_password);
-        Button login = (Button) findViewById(R.id.login);
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginActivity.this.showFirebaseLoginPrompt();
-            }
-        });
-
-        Button createButton = (Button) findViewById(R.id.button);
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createUser();
-            }
-        });
-
-
     }
 
     @Override
@@ -124,10 +136,37 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
                 mName = (String) authData.getProviderData().get("displayName");
                 break;
         }
-     //   Toast.makeText(getApplicationContext(), LOGIN_SUCCESS, Toast.LENGTH_SHORT).show();
-        Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-        LoginActivity.this.startActivity(myIntent);
-    }
+        //   Toast.makeText(getApplicationContext(), LOGIN_SUCCESS, Toast.LENGTH_SHORT).show();
+
+        if (isInternetPresent) {
+            Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+            LoginActivity.this.startActivity(myIntent);
+        } else {
+            Toast.makeText(LoginActivity.this, INTERNET_ERROR, Toast.LENGTH_LONG).show();
+
+            ///////////check///////////
+        try {
+                AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
+
+                alertDialog.setTitle("Info");
+                alertDialog.setMessage("Internet not available, Cross check your internet connectivity and try again");
+                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+
+                    }
+                });
+
+                alertDialog.show();
+       }
+            catch(Exception e)
+            {
+              //  Log.d(Constants.TAG, "Show Dialog: "+e.getMessage());
+            }
+        }
+        }
+
 
     @Override
     public void onFirebaseLoggedOut() {

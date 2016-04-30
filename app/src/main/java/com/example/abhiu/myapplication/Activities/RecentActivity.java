@@ -2,58 +2,79 @@ package com.example.abhiu.myapplication.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-import com.example.abhiu.myapplication.Fragments.RecentRecyclerView;
 import com.example.abhiu.myapplication.R;
-import com.example.abhiu.myapplication.Utilities.Complaint;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class RecentActivity extends AppCompatActivity implements RecentRecyclerView.LoadRecentComplaint{
+public class RecentActivity extends AppCompatActivity {
+    private Firebase mRef;
+    ListView listView;
+    HashMap<String, ?> complaintMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recent);
-
-    /*    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        this.setTitle("Recent requests");*/
-
-// getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace_1, new RecentRecyclerView())
-// .commit();
-
-// Use Firebase to populate the list.
+        final ArrayList<HashMap<String, ?>> complaintList = new ArrayList<>();
+        listView = (ListView) findViewById(R.id.listView_id);
         Firebase.setAndroidContext(this);
-        final TextView textView = (TextView ) findViewById(R.id.listText);
-        Firebase recent_firebase_ref = new Firebase(LoginActivity.getFIREBASEREF());
-        recent_firebase_ref.addValueEventListener(new ValueEventListener() {
+        mRef = new Firebase("https://fixthis.firebaseio.com");
+
+        String[] values = new String[]{"Android List View",
+                "Adapter implementation",
+                "Simple List View In Android",
+                "Create List View Android",
+                "Android Example",
+                "List View Source Code",
+                "List View Array Adapter",
+                "Android Example List View"
+        };
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1);
+        listView.setAdapter(adapter);
+
+        mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-// for(DataSnapshot snapshot:dataSnapshot.getChildren())
-// {
-                HashMap<String,?> complaint = (HashMap<String, ?>) dataSnapshot.child("Road Complaints").child("Chiranth Bs")
-                        .child("Road Complaint 1").getValue();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    complaintMap  = (HashMap<String, ?>) postSnapshot.getValue();
+                    complaintList .add(complaintMap);
+                    adapter.add(String.valueOf(complaintList));
 
-                textView.setText(complaint.get("landmark").toString());
-// }
+                }
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                Toast.makeText(getApplicationContext(),"Firebase cancelled",Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    @Override
-    public void loadRecentComplaints(int position, Complaint complaint) {
-        Toast.makeText(getApplicationContext(),"loading recent complaint",Toast.LENGTH_SHORT);
+//        new Firebase("https://fixthis.firebaseio.com")
+//                .addChildEventListener(new ChildEventListener() {
+//                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                        adapter.add((String) dataSnapshot.child("Road Complaints").getValue());
+//                    }
+//
+//                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+//                        adapter.remove((String) dataSnapshot.child("text").getValue());
+//                    }
+//
+//                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//                    }
+//
+//                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//                    }
+//                    @Override
+//                    public void onCancelled(FirebaseError firebaseError) {}
+//
+//                });
     }
 }

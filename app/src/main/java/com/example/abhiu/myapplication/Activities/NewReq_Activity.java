@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +39,7 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
         setContentView(R.layout.activity_new_req_);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.setTitle("New Requests");
 
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_replace, new RecyclerView_frag(),"Complaints")
@@ -75,9 +77,8 @@ public class NewReq_Activity extends AppCompatActivity implements RecyclerView_f
             }
 
             if (id == R.id.feedback) {
-                Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                emailIntent.setType("text/plain");
-                startActivity(emailIntent);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + "feedbackfixthis@gmail.com"));
+                startActivity(intent);
             }
 
             if (id == R.id.about) {

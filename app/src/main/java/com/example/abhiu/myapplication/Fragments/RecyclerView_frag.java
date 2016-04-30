@@ -46,7 +46,6 @@ public class RecyclerView_frag extends Fragment
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerViewAdapter = new MyRecyclerViewAdapter(getContext());
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
-
         ///////////////////////////////////////////////////////////////////////////////////////////
         final loadFragment loadFragmentInterface;
 

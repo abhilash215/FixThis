@@ -71,7 +71,7 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginLeft="120dp"
-        android:src="@drawable/camera"
+        android:src="@drawable/cameraicon"
         android:id="@+id/camera_garbage"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />

@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.example.abhiu.myapplication.Activities.LoginActivity;
+import com.example.abhiu.myapplication.Activities.MainActivity;
 import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
 import com.example.abhiu.myapplication.Utilities.Complaint;
@@ -217,9 +218,13 @@ public class Road_frag extends Fragment {
                 if(type.matches("PASSWORD")) road_firebase.child(uid).child(str).setValue(cmp);
                 else road_firebase.child(name).child(str).setValue(cmp);
                 Toast.makeText(getContext(),"Complaint submitted successfully",Toast.LENGTH_SHORT).show();
+
+                Intent i=new Intent(getActivity(),MainActivity.class);
+                startActivity(i);
                 //////////////////////////////////////////////////////////////////////////////////
             }
         });
+
         Button bl;
         bl = (Button) rootView.findViewById(R.id.locationroad);
         bl.setOnClickListener(new View.OnClickListener() {

@@ -26,6 +26,7 @@ public class Settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         Toolbar toolbars = (Toolbar) findViewById(R.id.toolbarsettings);
         setSupportActionBar(toolbars);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Settings");
 ////////////////////////////////////////////////////////
         Transition enterTrans = new Explode();
@@ -85,9 +86,8 @@ public class Settings extends AppCompatActivity {
         }
 
         if (id == R.id.feedback) {
-            Intent emailIntent = new Intent(Intent.ACTION_SEND);
-            emailIntent.setType("text/plain");
-            startActivity(emailIntent);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + "feedbackfixthis@gmail.com"));
+            startActivity(intent);
         }
 
         if (id == R.id.about) {

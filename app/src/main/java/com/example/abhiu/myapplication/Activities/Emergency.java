@@ -22,6 +22,7 @@ public class Emergency extends AppCompatActivity{
         setContentView(R.layout.activity_emergency);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbaremer);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         LinearLayout linearLayout=(LinearLayout)findViewById(R.id.layoutpolice);
         linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +51,17 @@ public class Emergency extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:911"));
+                startActivity(intent);
+            }
+        });
+
+
+        LinearLayout linearLayout5=(LinearLayout)findViewById(R.id.itsdialer);
+        linearLayout5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:3154432677"));
                 startActivity(intent);
             }
         });

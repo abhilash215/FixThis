@@ -77,7 +77,7 @@
 <ImageView
     android:layout_width="120dp"
     android:layout_height="120dp"
-    android:src="@drawable/camera"
+    android:src="@drawable/cameraicon"
     android:id="@+id/camera_road"
     android:layout_alignParentTop="true"
     android:layout_centerHorizontal="true" />

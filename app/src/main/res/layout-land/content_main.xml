@@ -48,7 +48,8 @@
         android:orientation="vertical"
         android:id="@+id/recentid"
         android:background="@drawable/ripple_effect"
-        android:layout_toEndOf="@+id/reqid">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true">
 
     <ImageView
         android:layout_width="80dp"
@@ -138,7 +139,7 @@
 </RelativeLayout>
      <android.support.v4.view.ViewPager
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
+       android:layout_height="218dp"
        android:id="@+id/viewpager_id"
          android:layout_below="@+id/emerid">
    </android.support.v4.view.ViewPager>

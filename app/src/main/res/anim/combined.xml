@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<set>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
 
-<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
-        android:duration="1000"
-        android:valueFrom="800"
-        android:valueTo="0"
-        android:propertyName="x"
-        android:valueType="floatType"/>
-
-<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
-        android:duration="1000"
-        android:valueFrom="1500"
-        android:valueTo="0"
-        android:propertyName="y"
-        android:valueType="floatType"/>
-
-<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="1000"
-    android:interpolator="@android:interpolator/accelerate_decelerate"
-    android:propertyName="rotationY"
-    android:valueFrom="0"
-    android:valueTo="360" />
-
+    <alpha
+        android:fromAlpha = "1.0"
+        android:toAlpha = "1.5"
+        android:duration = "300">
+    </alpha>
+    <scale
+        android:fromXScale = "-1"
+        android:toXScale = "1.0"
+        android:fromYScale = "1"
+        android:toYScale = "0.9"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:duration = "2000">
+    </scale>
 </set>

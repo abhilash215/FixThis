@@ -57,7 +57,7 @@
         android:layout_height="match_parent"
         android:id="@+id/frame_recyclerview"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_below="@+id/maincollapsingr">
+        android:layout_below="@+id/mainbackdropr">
 
 
         <TextView
@@ -93,6 +93,7 @@
             android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/recycleViewId"/>
+
     </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>
