@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SuccessFul Developers behind "
+            android:text="Developers behind "
             android:textSize="22dp"
             android:id="@+id/textView3"
             android:layout_marginLeft="25dp"

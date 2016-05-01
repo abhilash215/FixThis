@@ -1,5 +1,6 @@
 package com.example.abhiu.myapplication.Fragments;
 
+import android.support.v7.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,6 +19,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +31,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.example.abhiu.myapplication.Activities.LoginActivity;
@@ -61,12 +67,14 @@ public class Road_frag extends Fragment {
     ImageView iv;
     Button b;
     Button bc;
+    ActionBar actionBar;
+    Toolbar mToolbar;
     EditText landmark, descr, reporter,locationAddress;
     private static final int REQUEST_CAMERA = 123, SELECT_FILE = 1; // integer request code for camera
     private LocationManager locationManager;
     // SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
-    Firebase road_firebase = new Firebase(LoginActivity.getFIREBASEREF()).child("Road Complaints");
+    Firebase road_firebase = new Firebase(LoginActivity.getFIREBASEREF()).child("RoadComplaints");
     /////////////////////////////////////////////////////////////////////////////////////////////////
     int[] mResources = {
             R.drawable.road,
@@ -121,7 +129,7 @@ public class Road_frag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+            Firebase.setAndroidContext(getContext());
         rootView = inflater.inflate(R.layout.fragment_road, container, false);
         /////////////////////////////////////// viewpager //////////////////////////////////////
         myPagerAdapter = new MyPagerAdapter(getContext());
@@ -129,6 +137,11 @@ public class Road_frag extends Fragment {
         mViewPager.setCurrentItem(0);
         mViewPager.setAdapter(myPagerAdapter);
         mViewPager.setPageTransformer(true, new RotateUpTransformer());
+
+         actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        actionBar.hide();
+        mToolbar = (Toolbar) rootView.findViewById(R.id.maintoolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
         ////////////timer //////////////
         Timer timer  = new Timer();
         timer.schedule(new TimerTask() {
@@ -160,13 +173,14 @@ public class Road_frag extends Fragment {
   //      String strAddr = sharedPreferences.getString("address",gpsLocation.getAddress());
    //   if(sharedPreferences!=null) locationAddress.setText();
         EditText editText = (EditText) rootView.findViewById(R.id.edit_loc_road);
+
         ///////////// collapsing toolbar ////////////////////////////////////////////////////////////
         final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) rootView.findViewById(R.id.main_collapsing);
         collapsingToolbarLayout.setTitle("Road");
         //ImageView imageView = (ImageView) rootView.findViewById(R.id.mainbackdrop);
         //imageView.setImageResource(R.drawable.road);
         ////////////////////////////////////////////////////////////////////////////////
-
+       final EditText ph=(EditText) rootView.findViewById(R.id.phone_road_id);
         editText.setText("Location");
 
         iv.setOnClickListener(new View.OnClickListener() {
@@ -186,12 +200,12 @@ public class Road_frag extends Fragment {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(getActivity(),"Complaint successfully registered",Toast.LENGTH_LONG).show();
-                Displayfun();
+              //  Displayfun();
                 // cnt = cmp.getCount();
 
                 cnt++;
                 cmp.setCount(cnt);
-                str = "Road Complaint " + cnt;
+                str = "RoadComplaint " + cnt;
                 //road_firebase.setValue(str);
 
                 cmp.setLandmark(landmark.getText().toString());
@@ -205,42 +219,44 @@ public class Road_frag extends Fragment {
                 cmp.setCurrentTime(timeString);
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////
                 SharedPreferences sharedPreferences1 = getContext().getSharedPreferences("user", Context.MODE_PRIVATE);
-               String   name = sharedPreferences1.getString("name", "No Name found");
+               String   name = sharedPreferences1.getString("name", "Anonymous"+cnt);
                 cmp.setuName(name);
-               String  email = sharedPreferences1.getString("email","No Email found");
+               String  email = sharedPreferences1.getString("email","Anonymous"+cnt);
+                String email1=email.replaceAll("[.]","")+ cnt;
                 cmp.setuEmail(email);
+                cmp.setPhoneNumber(ph.getText().toString());
                 //////////////////////////////////////////////////////////////////////////////////
 
                 AuthData authData= road_firebase.getAuth();
-                String type = (String) authData.getProvider();
+            //    String type = (String) authData.getProvider();
                 String uid = authData.getUid();
+              //  String uid = "something";
                 cmp.setuId(uid);
-                if(type.matches("PASSWORD")) road_firebase.child(uid).child(str).setValue(cmp);
-                else road_firebase.child(name).child(str).setValue(cmp);
-                Toast.makeText(getContext(),"Complaint submitted successfully",Toast.LENGTH_SHORT).show();
-
+                //if(type.matches("PASSWORD")) road_firebase.child(uid).child(str).setValue(cmp);
+                //else
+                    road_firebase.child(email1+cnt).child(str).setValue(cmp);
+                Toast.makeText(getContext(),"Complaint submitted successfully with id "+uid,Toast.LENGTH_SHORT).show();
+                sendSMSMessage(cmp.getPhoneNumber(),uid);
                 Intent i=new Intent(getActivity(),MainActivity.class);
                 startActivity(i);
                 //////////////////////////////////////////////////////////////////////////////////
             }
         });
 
-        Button bl;
-        bl = (Button) rootView.findViewById(R.id.locationroad);
-        bl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // Intent i = new Intent(getActivity(), MapsActivity.class);
-//                startActivity(i);
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.road_coordinator_id, new FragmentGoogleMap().newInstance(),"mapTAG")
-                        .addToBackStack("mapTAG")
-                        .commit();
-            }
-        });
 
-        bc = (Button) rootView.findViewById(R.id.btncancel);
+        ImageView imvLoc = (ImageView) rootView.findViewById(R.id.road_gps_id);
+        imvLoc.setOnClickListener(new View.OnClickListener() {
+                                      @Override
+                                      public void onClick(View v) {
+                                          getActivity().getSupportFragmentManager()
+                                                  .beginTransaction()
+                                                  .replace(R.id.road_coordinator_id, new FragmentGoogleMap().newInstance(),"mapTAG")
+                                                  .addToBackStack("mapTAG")
+                                                  .commit();
+                                      }
+                                  });
+
+                bc = (Button) rootView.findViewById(R.id.btncancel);
         bc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -306,6 +322,7 @@ public class Road_frag extends Fragment {
         }
 
         iv.setImageBitmap(thumbnail);
+        iv.setTransitionName("animationName");
         cmp.setBmp(thumbnail);
 
     }
@@ -391,5 +408,20 @@ public class Road_frag extends Fragment {
     public void updateLocation(String address){
         locationAddress.setText(address);
         cmp.setStreetAddress(locationAddress.getText().toString());
+    }
+    protected void sendSMSMessage(String num,String uid) {
+        Log.i("Send SMS", "");
+
+
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(num, null,"Your road complaint was successfully registered", null, null);
+            Toast.makeText(getContext(), "check your phone", Toast.LENGTH_LONG).show();
+        }
+
+        catch (Exception e) {
+            Toast.makeText(getContext(), "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
     }
 }//end of main class

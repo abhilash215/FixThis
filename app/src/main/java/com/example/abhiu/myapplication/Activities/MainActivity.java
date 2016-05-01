@@ -1,8 +1,11 @@
 package com.example.abhiu.myapplication.Activities;
 
+import android.Manifest;
 import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,6 +15,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -22,24 +26,36 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.example.abhiu.myapplication.Fragments.AboutFragment;
-import com.example.abhiu.myapplication.Fragments.Recent_frag;
 import com.example.abhiu.myapplication.Fragments.User_Profile_frag;
 import com.example.abhiu.myapplication.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    public static final String TAG = "MainActivity";
+    private static final int REQUEST_CAMERA = 0;
+    private static final int REQUEST_CONTACTS=1;
+    private static String[] PERMISSIONS ={Manifest.permission.CAMERA,Manifest.permission.ACCESS_FINE_LOCATION,
+    Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.SEND_SMS};
+    private ImageView imgProfilePic;
+       private TextView txtName, txtEmail;
+        String name,email;
+          Uri profilePicUrl;
+        String strProfilePic;
+     SharedPreferences sharedPreferences ;
     int pagerCount=0;
 
     int[] mResources = {
             R.drawable.campusaerialview,
-            R.drawable.syr,R.drawable.syr1,R.drawable.syr2,R.drawable.syr3
+            R.drawable.syr,R.drawable.syr1, R.drawable.syr2,R.drawable.syr3
     };
     ViewPager mViewPager;
     MyPagerAdapter myPagerAdapter;
@@ -49,6 +65,17 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+               ///////////////////////////////Google login/////////////////////////////////////////////////////
+
+     sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+
+           strProfilePic = sharedPreferences.getString("profile_pic","No Image found");
+                name = sharedPreferences.getString("name","No Name found");
+               email = sharedPreferences.getString("email","No Email found");
+
+ //////////////////////////////////////////////////////////////////////////////////////////////////
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.setTitle("FixThis");
@@ -61,6 +88,15 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0); // to set header values
+        ////////////////////////////////setting navigation drawer profile details////////////////
+                imgProfilePic = (ImageView) headerView.findViewById(R.id.imageView_h);
+                txtName = (TextView) headerView.findViewById(R.id.user_name_id);
+                txtEmail = (TextView) headerView.findViewById(R.id.textView);
+                txtName.setText(name);
+                txtEmail.setText(email);
+                Picasso.with(this).load(strProfilePic).into(imgProfilePic);
+                ///////////////////////////////////////////////////////////////////////////////////
         LinearLayout linearLayout=(LinearLayout)findViewById(R.id.reqid);
         RelativeLayout r1=(RelativeLayout)findViewById(R.id.recentid);
         RelativeLayout r2=(RelativeLayout)findViewById(R.id.emerid);
@@ -92,7 +128,7 @@ public class MainActivity extends AppCompatActivity
         r1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i2 = new Intent(MainActivity.this, RecentActivity.class);
+                Intent i2 = new Intent(MainActivity.this, HealthCareAcivity.class);
                 startActivity(i2);
             }
         });
@@ -143,12 +179,22 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+
+        new AlertDialog.Builder(this)
+                .setTitle("Exit app?")
+                .setMessage("Are you sure you want to exit?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        MainActivity.super.onBackPressed();
+                    }
+                }).create().show();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+            drawer.closeDrawer(GravityCompat.START);}
+        else {
+           // super.onBackPressed();
+       }
     }
 
     @Override
@@ -213,13 +259,7 @@ public class MainActivity extends AppCompatActivity
             Intent i=new Intent(this,com.example.abhiu.myapplication.Activities.NewReq_Activity.class);
             startActivity(i);
         }
-        else if (id == R.id.nav_recent)
-        {
-            getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(R.anim.fade_in, 0, 0, R.anim.anim)
-                    .replace(R.id.content_main, Recent_frag.newInstancerecent(R.id.recent_frag))
-                    .commit();
-        }
+
         else if (id==R.id.home)
         {
             Intent i=new Intent(getApplicationContext(), MainActivity.class);
@@ -237,8 +277,7 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-        else if (id == R.id.abt_me)
-        {
+        else if (id == R.id.abt_me) {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.fade_in,0,0,R.anim.anim)
                     .replace(R.id.content_main, User_Profile_frag.newInstanceuser(R.id.user_profile))
@@ -267,6 +306,10 @@ public class MainActivity extends AppCompatActivity
         super.onSaveInstanceState(outState);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
 
     //////////// adapter class here ////////////////
@@ -310,6 +353,5 @@ public class MainActivity extends AppCompatActivity
 
 
     }// end of pager adapter class
-
 
 }

@@ -5,21 +5,30 @@ import android.accounts.AccountManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.abhiu.myapplication.Activities.LoginActivity;
 import com.example.abhiu.myapplication.Activities.MainActivity;
 import com.example.abhiu.myapplication.R;
+import com.example.abhiu.myapplication.Utilities.User;
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 
 
 
 public class User_Profile_frag extends Fragment {
     LoginActivity loginActivity;
+    User user = new User();
+    Button buttonSubmit;
+    EditText fName,lName,phNo,email;
+    Firebase user_ref = new Firebase(loginActivity.getFIREBASEREF()).child("UserList");
     public User_Profile_frag() {
         // Required empty public constructor
     }
@@ -52,7 +61,25 @@ public class User_Profile_frag extends Fragment {
             e.printStackTrace();
             strGmail = null;
         }
-        editText.setText(strGmail);
+        AuthData authData= user_ref.getAuth();
+       final String uid = authData.getUid();
+        fName = (EditText) rootView.findViewById(R.id.editText2);
+        lName = (EditText) rootView.findViewById(R.id.editText4);
+        phNo = (EditText) rootView.findViewById(R.id.editText3);
+        email = (EditText) rootView.findViewById(R.id.editText);
+        buttonSubmit = (Button) rootView.findViewById(R.id.button2);
+        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                     user.setfName(fName.getText().toString());
+                    user.setlName(lName.getText().toString());
+                user.setPhoneNumber(phNo.getText().toString());
+                user.setUserEmail(email.getText().toString());
+                user_ref.child(uid).setValue(user);
+                Toast.makeText(getContext(),"Details Submitted Successfully",Toast.LENGTH_SHORT).show();
+                sendSMSMessage(user.getPhoneNumber(),uid);
+            }
+        });
         return  rootView;
     }
 
@@ -74,5 +101,19 @@ public class User_Profile_frag extends Fragment {
         ((MainActivity) getActivity())
                 .setActionBarTitle("User Profile");
     }
+    protected void sendSMSMessage(String num,String uid) {
+        Log.i("Send SMS", "");
 
+
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(num, null,"your complaint id is "+uid, null, null);
+            Toast.makeText(getContext(), "check your phone", Toast.LENGTH_LONG).show();
+        }
+
+        catch (Exception e) {
+            Toast.makeText(getContext(), "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
 }

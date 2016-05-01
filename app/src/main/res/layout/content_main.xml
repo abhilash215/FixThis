@@ -23,7 +23,7 @@
         android:id="@+id/new_request_id"
         android:clickable="true"
         android:layout_marginLeft="35dp"
-        android:src="@drawable/ic_fiber_new_black_24dp"
+        android:src="@drawable/ic_action_edit"
         android:layout_above="@+id/new_req"
         android:layout_alignStart="@+id/fav"
         android:layout_marginStart="30dp" />
@@ -55,7 +55,7 @@
         android:layout_height="50dp"
         android:id="@+id/recent_img"
         android:clickable="true"
-        android:src="@drawable/ic_access_time_black_24dp"
+        android:src="@drawable/ic_action_warning"
         android:layout_gravity="center_horizontal"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -63,7 +63,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Recent"
+        android:text="Health Care"
         android:id="@+id/recent"
         android:layout_marginRight="31dp"
         android:textStyle="bold"
@@ -86,7 +86,7 @@
     <ImageView
         android:layout_width="80dp"
         android:layout_height="50dp"
-        android:src="@drawable/emergency"
+        android:src="@drawable/ic_action_phone_start"
         android:id="@+id/fav_img"
         android:layout_marginRight="0dp"
         android:layout_marginTop="24dp"
@@ -130,7 +130,7 @@
         android:layout_width="80dp"
         android:layout_height="50dp"
         android:clickable="true"
-        android:src="@drawable/ic_person_black_24dp"
+        android:src="@drawable/ic_action_user"
         android:id="@+id/user_img"
         android:layout_marginTop="23dp"
         android:layout_alignParentTop="true"

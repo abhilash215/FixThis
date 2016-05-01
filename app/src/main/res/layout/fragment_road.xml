@@ -30,25 +30,19 @@
             app:expandedTitleMarginEnd="64dp"
             >
 
-            <ImageView
-                android:id="@+id/mainbackdrop"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:scaleType="centerCrop"
-                android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax"
-                />
+
             <android.support.v4.view.ViewPager
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/viewpager_id">
+                android:id="@+id/viewpager_id"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
             </android.support.v4.view.ViewPager>
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/main.toolbar"
+                android:id="@+id/maintoolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|snap"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_collapseMode="pin"
                 />
@@ -90,15 +84,23 @@
         android:id="@+id/location"
         android:layout_below="@+id/camera_road"
         android:textSize="20sp"/>
-
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/gps_icon"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/camera_road"
+            android:id="@+id/road_gps_id"
+            />
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:id="@+id/edit_loc_road"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="45dp"
         android:layout_below="@+id/camera_road"
         android:layout_alignParentLeft="true"
+        android:hint="Location"
         android:layout_alignParentStart="true" />
 
     <EditText
@@ -125,7 +127,14 @@
         android:layout_below="@+id/road_desc"
         android:hint="Reporter"/>
 
-
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Phone number"
+        android:textSize="20dp"
+        android:layout_below="@+id/user_road"
+        android:id="@+id/phone_road_id"
+        />
 
 
     <Button
@@ -134,6 +143,7 @@
         android:text="Submit"
         android:layout_marginTop="57dp"
         android:id="@+id/buttonroad"
+        android:background="@drawable/pressed"
         android:layout_below="@+id/user_road"
         android:layout_toStartOf="@+id/camera_road" />
 
@@ -143,15 +153,10 @@
         android:text="Cancel"
         android:id="@+id/btncancel"
         android:layout_alignTop="@+id/buttonroad"
+        android:background="@drawable/pressed"
         android:layout_toEndOf="@+id/camera_road" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Location"
-        android:id="@+id/locationroad"
-        android:layout_alignBottom="@+id/buttonroad"
-        android:layout_alignEnd="@+id/camera_road" />
+
 
 </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>

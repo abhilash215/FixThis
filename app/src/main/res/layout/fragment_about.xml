@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:textSize="17sp"
         android:id="@+id/answer"
-        android:text="Fixthis is an app which provides the user with the option to register the complaint with the concerned agency or department.The app allows the user to select the location and also the type of complaint and the complaint can be easily registered.The user info is fetched from their gmail account when they login.  "
+        android:text="Fixthis is an app which provides the user with the option to register the complaint with the concerned agency or department.The app allows the user to select the location and also the type of complaint and the complaint can be easily registered.The user info is fetched from their gmail account when they login.Another feauture of this app is to provide a list of healthcare providers in that city with their address and phone number"
         android:layout_marginTop="28dp"
         android:layout_below="@+id/what"/>
 

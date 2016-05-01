@@ -174,7 +174,7 @@
                 android:id="@+id/opendialer"
                 android:layout_margin="5dp"
                 android:textSize="22sp"
-                android:text="Open Dialer"  />
+                android:text="SU healthcare"  />
 
         </LinearLayout>
     </RelativeLayout>

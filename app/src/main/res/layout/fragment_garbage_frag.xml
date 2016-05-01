@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     app:layout_scrollFlags="scroll|snap"
     android:background="@color/primary_light"
+    android:id="@+id/garbage_coord_id"
     android:fitsSystemWindows="true"    >
 
     <android.support.design.widget.AppBarLayout
@@ -85,11 +86,18 @@
         android:textSize="20sp"/>
 
 
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/gps_icon"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/camera_garbage"
+        android:id="@+id/garbage_gps_id"
+        />
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/edit_loc_light"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_loc_garbage"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/camera_garbage"
         android:layout_alignParentLeft="true" />
@@ -100,48 +108,53 @@
         android:hint="Description"
         android:textSize="20sp"
         android:id="@+id/editText5"
-        android:layout_below="@+id/edit_loc_light"
+        android:layout_below="@+id/edit_loc_garbage"
         android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/user_road"
+        android:id="@+id/user_garbage"
         android:textSize="20dp"
         android:hint="Reporter"
         android:layout_below="@+id/editText5"
         android:layout_alignParentStart="true" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/phone_gar"
+        android:hint="Phone number"
+        android:paddingTop="25dp"
+        android:layout_below="@+id/user_garbage"
+     />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"
+        android:background="@drawable/pressed"
         android:layout_marginTop="450dp"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="50dp"
         android:id="@+id/buttongarbage" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
-        android:layout_below="@+id/user_road"
+        android:background="@drawable/ripple_effect"
+        android:layout_below="@+id/user_garbage"
         android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cancel"
+        android:background="@drawable/pressed"
         android:id="@+id/btncancel"
         android:layout_alignTop="@+id/buttongarbage"
-        android:layout_toEndOf="@+id/camera_road" />
+        android:layout_marginRight="10dp"
+        android:layout_toEndOf="@+id/camera_garbage" />
 
 </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
-    <android.support.design.widget.FloatingActionButton
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:src="@drawable/ic_cast_dark"
-        app:layout_anchor="@id/main.appbar"
-        app:layout_anchorGravity="bottom|right|end"   />
 </android.support.design.widget.CoordinatorLayout>

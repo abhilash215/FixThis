@@ -7,6 +7,7 @@
     app:layout_scrollFlags="scroll|snap"
     android:background="@color/primary_light"
     android:fitsSystemWindows="true"
+    android:id="@+id/light_coordinator_id"
     >
 
     <android.support.design.widget.AppBarLayout
@@ -94,16 +95,25 @@
         android:id="@+id/location_light"
         android:textSize="20sp"
         android:layout_alignTop="@+id/edit_loc_light"
+        android:layout_toRightOf="@+id/location_leak"
         android:layout_alignParentStart="true" />
 
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:id="@+id/edit_loc_light"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_below="@+id/camera_light"
         android:layout_alignParentLeft="true" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gpsId"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/gps_icon"
+        android:layout_below="@+id/camera_light"
+        />
 
     <EditText
         android:layout_width="match_parent"
@@ -130,12 +140,22 @@
         android:hint="Reporter"
         android:layout_below="@+id/pole_number"
         android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/phone_light"
+        android:hint="Phone number"
+        android:layout_below="@+id/spinner2"
+     />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Submit"
         android:id="@+id/buttonlight"
+        android:background="@drawable/pressed"
         android:layout_below="@+id/spinner2"
+        android:layout_marginTop="100dp"
         android:layout_toEndOf="@+id/location_light" />
 
     <Spinner
@@ -151,17 +171,12 @@
         android:layout_height="wrap_content"
         android:text="Cancel"
         android:id="@+id/btncancel"
+        android:background="@drawable/pressed"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="60dp"/>
 
 </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
-    <android.support.design.widget.FloatingActionButton
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:src="@drawable/ic_cast_dark"
-        app:layout_anchor="@id/main.appbar"
-        app:layout_anchorGravity="bottom|right|end"
-        />
+
 </android.support.design.widget.CoordinatorLayout>

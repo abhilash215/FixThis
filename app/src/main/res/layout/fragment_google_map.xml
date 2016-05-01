@@ -15,9 +15,8 @@
         android:id="@+id/googlemap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-
+        android:layout_height="match_parent">
+    </fragment>
 
 </RelativeLayout>
 <!--    <fragment xmlns:android="http://schemas.android.com/apk/res/android"

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/leak_coordinator_id"
     app:layout_scrollFlags="scroll|snap"
     android:background="@color/primary_light"
     android:fitsSystemWindows="true"    >
@@ -26,13 +27,7 @@
             app:expandedTitleMarginEnd="64dp"
             >
 
-            <ImageView
-                android:id="@+id/mainbackdropleak"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax"  />
+
 
             <android.support.v4.view.ViewPager
                 android:layout_width="match_parent"
@@ -86,11 +81,18 @@
         android:id="@+id/location_leak"
         android:layout_below="@+id/camera_leak"
         android:textSize="20sp"/>
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/gps_icon"
+        android:layout_alignParentRight="true"
+        android:id="@+id/leak_gps_id"
+        android:layout_below="@+id/camera_leak"
+/>
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/edit_loc_light"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_loc_leak"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/camera_leak"
         android:layout_alignParentLeft="true" />
@@ -102,7 +104,7 @@
         android:layout_marginTop="50dp"
         android:id="@+id/street"
         android:textSize="20sp"
-        android:layout_below="@+id/edit_loc_light"/>
+        android:layout_below="@+id/edit_loc_leak"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -110,39 +112,42 @@
         android:hint="Description"
         android:textSize="20sp"
         android:id="@+id/editText5"
-        android:layout_below="@+id/edit_loc_light"
+        android:layout_below="@+id/edit_loc_leak"
         android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/user_road"
+        android:id="@+id/user_leak"
         android:textSize="20dp"
         android:layout_below="@+id/street"
         android:hint="Reporter"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/leak_phone"
+        android:hint="Phone Number"
+        android:layout_below="@+id/user_leak"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Submit"
         android:layout_marginTop="450dp"
-        android:layout_centerHorizontal="true"
+        android:background="@drawable/pressed"
+        android:layout_marginLeft="60dp"
         android:id="@+id/buttonleakage" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Cancel"
         android:id="@+id/btncancel"
+        android:background="@drawable/pressed"
+        android:layout_marginLeft="200dp"
         android:layout_alignTop="@+id/buttonleakage"
         android:layout_toEndOf="@+id/camera_road" />
 
 </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
-    <android.support.design.widget.FloatingActionButton
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:src="@drawable/ic_cast_dark"
-        app:layout_anchor="@id/main.appbar"
-        app:layout_anchorGravity="bottom|right|end"   />
+
 </android.support.design.widget.CoordinatorLayout>

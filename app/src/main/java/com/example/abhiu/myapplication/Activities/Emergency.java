@@ -66,16 +66,15 @@ public class Emergency extends AppCompatActivity{
             }
         });
 
-
-        LinearLayout linearLayout4=(LinearLayout)findViewById(R.id.dialer);
-        linearLayout4.setOnClickListener(new View.OnClickListener() {
+        LinearLayout linearLayout6=(LinearLayout)findViewById(R.id.dialer);
+        linearLayout6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:3154439005"));
                 startActivity(intent);
             }
         });
-
     }
 
     @Override

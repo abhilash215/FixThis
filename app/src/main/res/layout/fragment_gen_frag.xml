@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_scrollFlags="scroll|snap"
+    android:id="@+id/gen_coord_id"
     android:background="@color/primary_light"
     android:fitsSystemWindows="true"    >
 
@@ -64,8 +65,7 @@
     android:id="@+id/general"
     android:background="@color/primary_light"
     tools:context="com.example.abhiu.myapplication.Fragments.Gen_frag">
-
-    <ImageView
+        <ImageView
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginLeft="120dp"
@@ -81,10 +81,17 @@
         android:layout_below="@+id/camera_other"
         android:textSize="20sp"/>
 
-
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/gps_icon"
+            android:layout_alignParentRight="true"
+            android:id="@+id/gen_gps_id"
+            android:layout_below="@+id/camera_other"
+            />
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:id="@+id/edit_loc_other"
         android:layout_marginTop="0dp"
         android:layout_below="@+id/location_other"
@@ -103,10 +110,16 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/user_road"
+        android:id="@+id/user_gen"
         android:textSize="20dp"
         android:layout_below="@+id/desc_other"
         android:hint="Reporter"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/phone_gen"
+            android:hint="Phone Number"
+            android:layout_below="@+id/user_gen"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -114,34 +127,24 @@
         android:hint="Submit"
         android:layout_marginTop="39dp"
         android:id="@+id/buttonother"
-        android:layout_below="@+id/user_road"
-        android:layout_centerHorizontal="true" />
+        android:background="@drawable/pressed"
+        android:layout_below="@+id/user_gen"
+        android:layout_marginLeft="80dp" />
 
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cancel"
+        android:background="@drawable/pressed"
         android:id="@+id/btncancel"
         android:layout_alignTop="@+id/buttonother"
-        android:layout_toEndOf="@+id/camera_road" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/dialer"
-        android:layout_alignBottom="@+id/buttonother"
         android:layout_toEndOf="@+id/camera_other" />
+
+
 
 
 </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
-    <android.support.design.widget.FloatingActionButton
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:src="@drawable/ic_call_black_24dp"
-        app:layout_anchor="@id/main.appbar"
-        app:layout_anchorGravity="bottom|right|end"   />
+
 </android.support.design.widget.CoordinatorLayout>

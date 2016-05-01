@@ -13,6 +13,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -210,6 +211,7 @@ public class FragmentGoogleMap extends Fragment implements
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        Toast.makeText(getContext(),"Click anywhere on Map to set your location",Toast.LENGTH_LONG).show();
         //mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         //mMap.setMapType(GoogleMap.MAP_TYPE_NONE);
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)

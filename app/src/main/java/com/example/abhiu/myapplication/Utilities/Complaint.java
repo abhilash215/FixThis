@@ -43,6 +43,16 @@ public class Complaint {
     String description;
     String reporter;
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    String phoneNumber;
+
     public String getCurrentTime() {
         return currentTime;
     }
@@ -90,7 +100,37 @@ public class Complaint {
     String uName;
     String uId;
     String uEmail;
+
+    public String getLightTypeComplaint() {
+        return lightTypeComplaint;
+    }
+
+    public void setLightTypeComplaint(String lightTypeComplaint) {
+        this.lightTypeComplaint = lightTypeComplaint;
+    }
+
+    String lightTypeComplaint;
+
+    public String getIntersection() {
+        return intersection;
+    }
+
+    public void setIntersection(String intersection) {
+        this.intersection = intersection;
+    }
+
+    String intersection;
     Bitmap bmp;
+
+    public String getPoleNumber() {
+        return poleNumber;
+    }
+
+    public void setPoleNumber(String poleNumber) {
+        this.poleNumber = poleNumber;
+    }
+
+    String poleNumber;
 
     public int getCount() {
         return count;

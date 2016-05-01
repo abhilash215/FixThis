@@ -1,11 +1,14 @@
 package com.example.abhiu.myapplication.Activities;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.util.Base64;
@@ -23,6 +26,9 @@ import com.firebase.client.FirebaseError;
 import com.firebase.ui.auth.core.AuthProviderType;
 import com.firebase.ui.auth.core.FirebaseLoginBaseActivity;
 import com.firebase.ui.auth.core.FirebaseLoginError;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -51,6 +57,11 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
     private static final String USER_CREATION_ERROR =  "User creation error";
     private static final String EMAIL_INVALID =  "email is invalid :";
     private static final String LOGGED_OUT =  "Logged out :";
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,10 +147,13 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
                 mName = (String) authData.getProviderData().get("displayName");
                 break;
         }
-        //   Toast.makeText(getApplicationContext(), LOGIN_SUCCESS, Toast.LENGTH_SHORT).show();
+           Toast.makeText(getApplicationContext(), LOGIN_SUCCESS, Toast.LENGTH_SHORT).show();
 
         if (isInternetPresent) {
             Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+            myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+           myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             LoginActivity.this.startActivity(myIntent);
         } else {
             Toast.makeText(LoginActivity.this, INTERNET_ERROR, Toast.LENGTH_LONG).show();
@@ -154,7 +168,6 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
                 alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
-
                     }
                 });
 
@@ -212,6 +225,26 @@ public class LoginActivity extends FirebaseLoginBaseActivity{
                     }
                 });
     }
+        ////////////////////////////// getting data from google /////////////////////////////////////
+                @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+                super.onActivityResult(requestCode, resultCode, data);
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                if(result.isSuccess()) {
+                        GoogleSignInAccount googleSignInAccount = result.getSignInAccount();
+                      String  name = googleSignInAccount.getDisplayName();
+                      String  email = googleSignInAccount.getEmail();
+                      Uri profilePicUrl = googleSignInAccount.getPhotoUrl();
+                      SharedPreferences sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+
+                               SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("name", name);
+                        editor.putString("email", email);
+                        editor.putString("profile_pic", profilePicUrl.toString());
+                       editor.commit();
+                    }
+            }
+                //////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 /*

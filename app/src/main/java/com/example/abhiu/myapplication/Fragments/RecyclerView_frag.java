@@ -28,13 +28,13 @@ public class RecyclerView_frag extends Fragment
 
     //interface to handle loading of fragment from recycler view
     public interface loadFragment{
-        public void loadComplaint(int type);
+        public void loadComplaint(int type,View view);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         View rootview = inflater.inflate(R.layout.fragment_recycler_view_frag, container, false);
+         final View rootview = inflater.inflate(R.layout.fragment_recycler_view_frag, container, false);
         // Inflate the layout for this fragment
         mRecyclerView = (RecyclerView) rootview.findViewById(R.id.recycleViewId);
         mRecyclerView.setHasFixedSize(true);
@@ -54,7 +54,8 @@ public class RecyclerView_frag extends Fragment
         mRecyclerViewAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                loadFragmentInterface.loadComplaint(position);
+                rootview.setTransitionName("animationName");
+                loadFragmentInterface.loadComplaint(position,rootview);
             }
         });
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

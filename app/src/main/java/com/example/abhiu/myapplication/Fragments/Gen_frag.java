@@ -3,6 +3,7 @@ package com.example.abhiu.myapplication.Fragments;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,23 +16,35 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
+import com.example.abhiu.myapplication.Activities.LoginActivity;
+import com.example.abhiu.myapplication.Activities.MainActivity;
 import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
+import com.example.abhiu.myapplication.Utilities.Complaint;
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,7 +61,13 @@ public class Gen_frag extends Fragment {
             R.drawable.road2,R.drawable.garbage4,R.drawable.leak };
     ViewPager mViewPager;
     MyPagerAdapter myPagerAdapter;
-
+    Complaint cmp = new Complaint();
+    public int genComplaintCount;
+    EditText reporter,descr;
+    EditText locationAddress;
+    Spinner lightSpinner;
+    public String str = "";
+    Firebase general_firebase = new Firebase(LoginActivity.getFIREBASEREF()).child("GeneralComplaints");
     ///////////////////////////////////////////////////////////////////////////////////////////////
     private void selectImage() {
         final CharSequence[] items = { "Take Photo", "Choose from Library", "Cancel" };
@@ -81,14 +100,25 @@ public class Gen_frag extends Fragment {
         // Required empty public constructor
     }
 
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences setting = getContext().getSharedPreferences("gencount", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = setting.edit();
+        editor.putInt("gencount", cmp.getCount()).commit();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
          View view= inflater.inflate(R.layout.fragment_gen_frag, container, false);
-
+        ////////////////////////////// find layout fields ///////////////////////////////////////////
+        reporter = (EditText)view.findViewById(R.id.user_gen);
+        locationAddress =  (EditText) view.findViewById(R.id.edit_loc_other);
+        descr = (EditText) view.findViewById(R.id.desc_other);
+        final EditText phonegen=(EditText) view.findViewById(R.id.phone_gen);
+        ////////////////////////////////////////////////////////////////////////
         b2=(Button)view.findViewById(R.id.buttonother);
         iv =(ImageView) view.findViewById(R.id.camera_other);
         iv.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +133,45 @@ public class Gen_frag extends Fragment {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"Complaint successfully registered", Toast.LENGTH_LONG).show();
+                ////////////////////////////////////////////////////////////////////////////////////////////////////
+                genComplaintCount++;
+                cmp.setCount(genComplaintCount);
+                str = "LightComplaint " + genComplaintCount;
+                //road_firebase.setValue(str);
+                ////////////////////////////////find layout params////////////////////////////////
+                cmp.setDescription(descr.getText().toString());
+                cmp.setReporter(reporter.getText().toString());
+                //////////////////////////// current timestamp ////////////////////////////////////
+                DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                Date date = new Date();
+                System.out.println(dateFormat.format(date));
+                String timeString = dateFormat.format(date);
+                cmp.setCurrentTime(timeString);
+                cmp.setPhoneNumber(phonegen.getText().toString());
+                /////////////////////////////////////////////////////////////////////////////////
+                SharedPreferences sharedPreferences2 = getContext().getSharedPreferences("address", Context.MODE_PRIVATE);
+                locationAddress.setText(sharedPreferences2.getString("address", "some address"));
+                //////////////////////////////get username and mail from sharedpref//////////////////////////
+                SharedPreferences sharedPreferences1 = getContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+                String   name = sharedPreferences1.getString("name", "Anonymous"+genComplaintCount);
+                cmp.setuName(name);
+                String  email = sharedPreferences1.getString("email","Anonymous"+genComplaintCount);
+                String email2=email.replaceAll("[.]","");
+                cmp.setuEmail(email);
+                //////////////////////////get firebase uid //////////////////////////////////
+                AuthData authData= general_firebase.getAuth();
+                String type = (String) authData.getProvider();
+                String uid = authData.getUid();
+                cmp.setuId(uid);
+                if(type.matches("PASSWORD") && type != null) general_firebase.child(uid).child(str).setValue(cmp);
+                else general_firebase.child(email2+genComplaintCount).child(str).setValue(cmp);
+                sendSMSMessage(cmp.getPhoneNumber(),uid);
+                Toast.makeText(getContext(),"Complaint submitted successfully with complaint id"+uid,Toast.LENGTH_LONG).show();
+                ////////////////////////// go to main page on submit /////////////////////////////////
+                Intent i=new Intent(getActivity(),MainActivity.class);
+                startActivity(i);
+                //////////////////////////////////////////////////////////////////////////////////
+                /////////////////////////////////////////////////////////////////////////////////////////////////////
             }
         });
 
@@ -149,17 +217,17 @@ public class Gen_frag extends Fragment {
             }
         });
 
-////////////open dialer///////////////
-        Button bd=(Button)view.findViewById(R.id.dialer);
-        bd.setOnClickListener(new View.OnClickListener() {
+        ///////////////////////////////Location google map///////////////////////////////////////
+       ImageView imvLocation = (ImageView) view.findViewById(R.id.gen_gps_id);
+        imvLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:9999999999"));
-                startActivity(intent);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.gen_coord_id,
+                        FragmentGoogleMap.newInstance())
+                        .addToBackStack("mapTAG").
+                        commit();
             }
         });
-/////////////////////dialer///////////////////////////
 return view;
     }
 
@@ -170,7 +238,8 @@ return view;
         // Set title bar
         ((NewReq_Activity) getActivity())
                 .setActionBarTitle("General/Others");
-
+        SharedPreferences setting = getContext().getSharedPreferences("gencount", Context.MODE_PRIVATE);
+        genComplaintCount = setting.getInt("gencount", cmp.getCount());
     }
     private static final String ARG_SECTION_NUMBER5 = "section_number";
 
@@ -276,5 +345,24 @@ return view;
         }
         ///////////////////////////////////////////////////////////////////////////////////////////
     }
+    public void updateLocation(String address){
+        locationAddress.setText(address);
+        cmp.setStreetAddress(locationAddress.getText().toString());
+    }
 
+    protected void sendSMSMessage(String num,String uid) {
+        Log.i("Send SMS", "");
+
+
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(num, null,"Your complaint was successfully registered ", null, null);
+            Toast.makeText(getContext(), "check your phone", Toast.LENGTH_LONG).show();
+        }
+
+        catch (Exception e) {
+            Toast.makeText(getContext(), "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,23 +17,35 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
+import com.example.abhiu.myapplication.Activities.LoginActivity;
+import com.example.abhiu.myapplication.Activities.MainActivity;
 import com.example.abhiu.myapplication.Activities.NewReq_Activity;
 import com.example.abhiu.myapplication.R;
+import com.example.abhiu.myapplication.Utilities.Complaint;
+import com.firebase.client.AuthData;
+import com.firebase.client.Firebase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -49,6 +62,12 @@ ImageView iv;
             R.drawable.leak1,R.drawable.leak2,R.drawable.leak3,R.drawable.leak4};
     ViewPager mViewPager;
     MyPagerAdapter myPagerAdapter;
+    Complaint cmp = new Complaint();
+    public int leakComplaintCount;
+    EditText reporter,intersection,descr,locationAddress;
+    Spinner lightSpinner;
+    public String str = "";
+    Firebase leak_firebase = new Firebase(LoginActivity.getFIREBASEREF()).child("LeakComplaints");
     ///////////////////////////////////////////////////////////////////////////////////////////////
     private void selectImage() {
         final CharSequence[] items = { "Take Photo", "Choose from Library", "Cancel" };
@@ -98,14 +117,20 @@ ImageView iv;
                 onCaptureImageResult(data);
         }
     }
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences setting = getContext().getSharedPreferences("leakcount", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = setting.edit();
+        editor.putInt("leakcount", cmp.getCount()).commit();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_leak_frag, container, false);
-Button  b4=(Button)view.findViewById(R.id.buttonleakage);
+       Button  b4=(Button)view.findViewById(R.id.buttonleakage);
         iv =(ImageView) view.findViewById(R.id.camera_leak);
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,18 +140,55 @@ Button  b4=(Button)view.findViewById(R.id.buttonleakage);
                 selectImage();
             }
         });
-
+        final EditText phoneleak=(EditText)view.findViewById(R.id.leak_phone);
         b4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"Complaint successfully registered", Toast.LENGTH_LONG).show();
+                leakComplaintCount++;
+                cmp.setCount(leakComplaintCount);
+                str = "LeaktComplaint " + leakComplaintCount;
+                //road_firebase.setValue(str);
+                ////////////////////////////////find layout params////////////////////////////////
+                cmp.setDescription(descr.getText().toString());
+                cmp.setReporter(reporter.getText().toString());
+                cmp.setIntersection(intersection.getText().toString());
+                //////////////////////////// current timestamp ////////////////////////////////////
+                DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                Date date = new Date();
+                System.out.println(dateFormat.format(date));
+                String timeString = dateFormat.format(date);
+                cmp.setCurrentTime(timeString);
+                cmp.setPhoneNumber(phoneleak.getText().toString());
+                /////////////////////////////////////////////////////////////////////////////////
+                SharedPreferences sharedPreferences2 = getContext().getSharedPreferences("address", Context.MODE_PRIVATE);
+                locationAddress.setText(sharedPreferences2.getString("address", "some address"));
+                //////////////////////////////get username and mail from sharedpref//////////////////////////
+                SharedPreferences sharedPreferences1 = getContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+                String   name = sharedPreferences1.getString("name", "Anonymous"+leakComplaintCount);
+                cmp.setuName(name);
+                String  email = sharedPreferences1.getString("email","Anonymous"+leakComplaintCount);
+                String email2=email.replaceAll("[.]","");
+                cmp.setuEmail(email);
+                //////////////////////////get firebase uid //////////////////////////////////
+                AuthData authData= leak_firebase.getAuth();
+                String type = (String) authData.getProvider();
+                String uid = authData.getUid();
+                cmp.setuId(uid);
+                if(type.matches("PASSWORD") && type != null) leak_firebase.child(uid).child(str).setValue(cmp);
+                else leak_firebase.child(email2+leakComplaintCount).child(str).setValue(cmp);
+                ////////////////////////// go to main page on submit /////////////////////////////////
+                Intent i=new Intent(getActivity(),MainActivity.class);
+                startActivity(i);
+                sendSMSMessage(cmp.getPhoneNumber(),uid);
+                Toast.makeText(getActivity(),"Complaint successfully registered with complaint id"+uid, Toast.LENGTH_LONG).show();
+
             }
         });
 
         CollapsingToolbarLayout collapsingToolbarLayout=(CollapsingToolbarLayout)view.findViewById(R.id.maincollapsingleak);
-        collapsingToolbarLayout.setTitle("Light");
-        ImageView imageView=(ImageView)view.findViewById(R.id.mainbackdropleak);
-        imageView.setImageResource(R.drawable.leak);
+        collapsingToolbarLayout.setTitle("Leakage");
+       // ImageView imageView=(ImageView)view.findViewById(R.id.mainbackdropleak);
+       // imageView.setImageResource(R.drawable.leak);
 
         bc=(Button) view.findViewById(R.id.btncancel);
         bc.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +198,13 @@ Button  b4=(Button)view.findViewById(R.id.buttonleakage);
                 startActivity(i);
             }
         });
+        ////////////////////////////// find layout fields ///////////////////////////////////////////
+        reporter = (EditText) view.findViewById(R.id.user_leak);
+        locationAddress =  (EditText) view.findViewById(R.id.edit_loc_leak);
+        intersection = (EditText) view.findViewById(R.id.street);
+        descr = (EditText) view.findViewById(R.id.editText5);
 
+        ///////////////////////////////////////////////////////////////////////////////////////////
         myPagerAdapter = new MyPagerAdapter(getContext());
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager_id);
         mViewPager.setCurrentItem(0);
@@ -164,7 +232,17 @@ Button  b4=(Button)view.findViewById(R.id.buttonleakage);
             }
         }, 500, 3000);
 
-
+        ///////////////////////////////Location google map///////////////////////////////////////
+       ImageView imvLocation = (ImageView) view.findViewById(R.id.leak_gps_id);
+        imvLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.leak_coordinator_id,
+                        FragmentGoogleMap.newInstance())
+                        .addToBackStack("mapTAG").
+                        commit();
+            }
+        });
         return  view;
     }
 
@@ -185,7 +263,8 @@ Button  b4=(Button)view.findViewById(R.id.buttonleakage);
         // Set title bar
         ((NewReq_Activity) getActivity())
                 .setActionBarTitle("Leakages");
-
+        SharedPreferences setting = getContext().getSharedPreferences("leakcount", Context.MODE_PRIVATE);
+        leakComplaintCount = setting.getInt("leakcount", cmp.getCount());
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////
     private void onCaptureImageResult(Intent data) {
@@ -287,5 +366,24 @@ Button  b4=(Button)view.findViewById(R.id.buttonleakage);
         cmp.setStreetAddress(locationAddress.getText().toString());
     }*/
 
+    public void updateLocation(String address){
+        locationAddress.setText(address);
+        cmp.setStreetAddress(locationAddress.getText().toString());
+    }
 
+    protected void sendSMSMessage(String num,String uid) {
+        Log.i("Send SMS", "");
+
+
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(num, null," Leak complaint was successfuly registered ", null, null);
+            Toast.makeText(getContext(), "check your phone", Toast.LENGTH_LONG).show();
+        }
+
+        catch (Exception e) {
+            Toast.makeText(getContext(), "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
 }
